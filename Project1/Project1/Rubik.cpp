@@ -8,11 +8,10 @@
 #include <cmath>
 #include <iostream>
 
-class cube{
+class cube {
 public:
-	
 	double colours[6][3] = { { 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
-	
+
 	cube(void) {}
 	cube(GLfloat x1, GLfloat x2, GLfloat y1, GLfloat y2, GLfloat z1, GLfloat z2)
 	{
@@ -35,7 +34,7 @@ public:
 	}
 	void drawBox(void)
 	{
-		
+
 		int i;
 		for (i = 0; i < 6; i++) {
 			glBegin(GL_QUADS);
@@ -54,12 +53,118 @@ public:
 		colours[face][1] = b;
 		colours[face][2] = c;
 	}
-	void rotate(int direction) {
-		glRotatef(5, 1.0, 1.0, 1.0);
+	void rotate(bool direction, int face, bool side) {
+		GLfloat store[8][4];
+		if (face == XSIDE) {
+			if (side == NAT) {
+				for (int i = 0; i < 8; i++) {
+					GLfloat a, b, c, d;
+
+					a = (xMatrix[direction][0][0] * v[i][0]) + (xMatrix[direction][0][1] * v[i][1]) + (xMatrix[direction][0][2] * v[i][2]) + (xMatrix[direction][0][3] * 1);
+					b = (xMatrix[direction][1][0] * v[i][0]) + (xMatrix[direction][1][1] * v[i][1]) + (xMatrix[direction][1][2] * v[i][2]) + (xMatrix[direction][1][3] * 1);
+					c = (xMatrix[direction][2][0] * v[i][0]) + (xMatrix[direction][2][1] * v[i][1]) + (xMatrix[direction][2][2] * v[i][2]) + (xMatrix[direction][2][3] * 1);
+					d = (xMatrix[direction][3][0] * v[i][0]) + (xMatrix[direction][3][1] * v[i][1]) + (xMatrix[direction][3][2] * v[i][2]) + (xMatrix[direction][3][3] * 1);
+
+					store[i][0] = a;
+					store[i][1] = b;
+					store[i][2] = c;
+					store[i][3] = d;
+				}
+			}
+			else {
+				for (int i = 0; i < 8; i++) {
+					GLfloat a, b, c, d;
+
+					a = (xMatrix[!direction][0][0] * v[i][0]) + (xMatrix[!direction][0][1] * v[i][1]) + (xMatrix[!direction][0][2] * v[i][2]) + (xMatrix[!direction][0][3] * 1);
+					b = (xMatrix[!direction][1][0] * v[i][0]) + (xMatrix[!direction][1][1] * v[i][1]) + (xMatrix[!direction][1][2] * v[i][2]) + (xMatrix[!direction][1][3] * 1);
+					c = (xMatrix[!direction][2][0] * v[i][0]) + (xMatrix[!direction][2][1] * v[i][1]) + (xMatrix[!direction][2][2] * v[i][2]) + (xMatrix[!direction][2][3] * 1);
+					d = (xMatrix[!direction][3][0] * v[i][0]) + (xMatrix[!direction][3][1] * v[i][1]) + (xMatrix[!direction][3][2] * v[i][2]) + (xMatrix[!direction][3][3] * 1);
+
+					store[i][0] = a;
+					store[i][1] = b;
+					store[i][2] = c;
+					store[i][3] = d;
+				}
+			}
+		}
+		else if (face == YSIDE) {
+			if (side == NAT) {
+				for (int i = 0; i < 8; i++) {
+					GLfloat a, b, c, d;
+
+					a = (yMatrix[direction][0][0] * v[i][0]) + (yMatrix[direction][0][1] * v[i][1]) + (yMatrix[direction][0][2] * v[i][2]) + (yMatrix[direction][0][3] * 1);
+					b = (yMatrix[direction][1][0] * v[i][0]) + (yMatrix[direction][1][1] * v[i][1]) + (yMatrix[direction][1][2] * v[i][2]) + (yMatrix[direction][1][3] * 1);
+					c = (yMatrix[direction][2][0] * v[i][0]) + (yMatrix[direction][2][1] * v[i][1]) + (yMatrix[direction][2][2] * v[i][2]) + (yMatrix[direction][2][3] * 1);
+					d = (yMatrix[direction][3][0] * v[i][0]) + (yMatrix[direction][3][1] * v[i][1]) + (yMatrix[direction][3][2] * v[i][2]) + (yMatrix[direction][3][3] * 1);
+
+					store[i][0] = a;
+					store[i][1] = b;
+					store[i][2] = c;
+					store[i][3] = d;
+				}
+			}
+			else {
+				for (int i = 0; i < 8; i++) {
+					GLfloat a, b, c, d;
+
+					a = (yMatrix[!direction][0][0] * v[i][0]) + (yMatrix[!direction][0][1] * v[i][1]) + (yMatrix[!direction][0][2] * v[i][2]) + (yMatrix[!direction][0][3] * 1);
+					b = (yMatrix[!direction][1][0] * v[i][0]) + (yMatrix[!direction][1][1] * v[i][1]) + (yMatrix[!direction][1][2] * v[i][2]) + (yMatrix[!direction][1][3] * 1);
+					c = (yMatrix[!direction][2][0] * v[i][0]) + (yMatrix[!direction][2][1] * v[i][1]) + (yMatrix[!direction][2][2] * v[i][2]) + (yMatrix[!direction][2][3] * 1);
+					d = (yMatrix[!direction][3][0] * v[i][0]) + (yMatrix[!direction][3][1] * v[i][1]) + (yMatrix[!direction][3][2] * v[i][2]) + (yMatrix[!direction][3][3] * 1);
+
+					store[i][0] = a;
+					store[i][1] = b;
+					store[i][2] = c;
+					store[i][3] = d;
+				}
+			}
+		}
+		else if (face == ZSIDE) {
+			if (side == NAT) {
+				for (int i = 0; i < 8; i++) {
+					GLfloat a, b, c, d;
+
+					a = (zMatrix[direction][0][0] * v[i][0]) + (zMatrix[direction][0][1] * v[i][1]) + (zMatrix[direction][0][2] * v[i][2]) + (zMatrix[direction][0][3] * 1);
+					b = (zMatrix[direction][1][0] * v[i][0]) + (zMatrix[direction][1][1] * v[i][1]) + (zMatrix[direction][1][2] * v[i][2]) + (zMatrix[direction][1][3] * 1);
+					c = (zMatrix[direction][2][0] * v[i][0]) + (zMatrix[direction][2][1] * v[i][1]) + (zMatrix[direction][2][2] * v[i][2]) + (zMatrix[direction][2][3] * 1);
+					d = (zMatrix[direction][3][0] * v[i][0]) + (zMatrix[direction][3][1] * v[i][1]) + (zMatrix[direction][3][2] * v[i][2]) + (zMatrix[direction][3][3] * 1);
+
+					store[i][0] = a;
+					store[i][1] = b;
+					store[i][2] = c;
+					store[i][3] = d;
+				}
+			}
+			else {
+				for (int i = 0; i < 8; i++) {
+					GLfloat a, b, c, d;
+
+					a = (zMatrix[!direction][0][0] * v[i][0]) + (zMatrix[!direction][0][1] * v[i][1]) + (zMatrix[!direction][0][2] * v[i][2]) + (zMatrix[!direction][0][3] * 1);
+					b = (zMatrix[!direction][1][0] * v[i][0]) + (zMatrix[!direction][1][1] * v[i][1]) + (zMatrix[!direction][1][2] * v[i][2]) + (zMatrix[!direction][1][3] * 1);
+					c = (zMatrix[!direction][2][0] * v[i][0]) + (zMatrix[!direction][2][1] * v[i][1]) + (zMatrix[!direction][2][2] * v[i][2]) + (zMatrix[!direction][2][3] * 1);
+					d = (zMatrix[!direction][3][0] * v[i][0]) + (zMatrix[!direction][3][1] * v[i][1]) + (zMatrix[!direction][3][2] * v[i][2]) + (zMatrix[!direction][3][3] * 1);
+
+					store[i][0] = a;
+					store[i][1] = b;
+					store[i][2] = c;
+					store[i][3] = d;
+				}
+			}
+		}
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 4; j++) {
+				v[i][j] = store[i][j];
+			}
+		}
 	}
 
 private:
-	
+	bool NAT = 0;
+	bool REV = 1;
+	int XSIDE = 0;
+	int YSIDE = 1;
+	int ZSIDE = 2;
+
 	GLfloat n[6][3] = {  /* Normals for the 6 faces of a cube. */
 		{ -1.0, 0.0, 0.0 },{ 0.0, 1.0, 0.0 },{ 1.0, 0.0, 0.0 },
 		{ 0.0, -1.0, 0.0 },{ 0.0, 0.0, 1.0 },{ 0.0, 0.0, -1.0 } };
@@ -69,24 +174,53 @@ private:
 	GLfloat v[8][3];  /* Will be filled in with X,Y,Z vertexes. */
 	GLfloat light_diffuse[4] = { 1.0, 1.0, 1.0, 1.0 };  /* Red diffuse light. */
 	GLfloat light_position[4] = { 1.0, 1.0, 1.0, 0.0 };  /* Infinite light location. */
-	float theta = 90;
-	float xMatrix[4][4] = { { 1, 0, 0, 0 },
-	{ 0, cos(theta), -sin(theta), 0 },
-	{ 0, sin(theta), cos(theta), 0 },
-	{ 0, 0, 0, 1 } };
-	float yMatrix[4][4] = { { cos(theta), 0, sin(theta), 0 },
-	{ 0, 1, 0, 0 },
-	{ -sin(theta), 0, cos(theta), 0 },
-	{ 0, 0, 0, 1 } };
-	float zMatrix[4][4] = { { cos(theta), -sin(theta), 0, 0 },
-	{ sin(theta), cos(theta), 0, 0 },
-	{ 0, 0, 1, 0 },
-	{ 0, 0, 0, 1 } };
+	float theta = M_PI_4 / 8;
+	float xMatrix[2][4][4] = {
+		{ { 1, 0, 0, 0 },
+		{ 0, cos(theta), -sin(theta), 0 },
+		{ 0, sin(theta), cos(theta), 0 },
+		{ 0, 0, 0, 1 } } ,
+
+		{ { 1, 0, 0, 0 },
+		{ 0, cos(theta), sin(theta), 0 },
+		{ 0, -sin(theta), cos(theta), 0 },
+		{ 0, 0, 0, 1 } }
+	};
+	float yMatrix[2][4][4] = {
+		{ { cos(theta), 0, -sin(theta), 0 },
+		{ 0, 1, 0, 0 },
+		{ sin(theta), 0, cos(theta), 0 },
+		{ 0, 0, 0, 1 } },
+
+		{ { cos(theta), 0, sin(theta), 0 },
+		{ 0, 1, 0, 0 },
+		{ -sin(theta), 0, cos(theta), 0 },
+		{ 0, 0, 0, 1 } }
+	};
+	float zMatrix[2][4][4] = {
+		{ { cos(theta), sin(theta), 0, 0 },
+		{ -sin(theta), cos(theta), 0, 0 },
+		{ 0, 0, 1, 0 },
+		{ 0, 0, 0, 1 } },
+
+		{ { cos(theta), -sin(theta), 0, 0 },
+		{ sin(theta), cos(theta), 0, 0 },
+		{ 0, 0, 1, 0 },
+		{ 0, 0, 0, 1 } }
+	};
 };
 
 
 
 //========================================================================================================================================================================
+
+bool CW = 0;
+bool CCW = 1;
+int XSIDE = 0;
+int YSIDE = 1;
+int ZSIDE = 2;
+bool NAT = 0;
+bool REV = 1;
 
 cube backTopLeft, backTopMiddle, backTopRight;
 cube backMiddleLeft, backMiddleMiddle, backMiddleRight;
@@ -97,6 +231,7 @@ cube middleBottomLeft, middleBottomMiddle, middleBottomRight;
 cube frontTopLeft, frontTopMiddle, frontTopRight;
 cube frontMiddleLeft, frontMiddleMiddle, frontMiddleRight;
 cube frontBottomLeft, frontBottomMiddle, frontBottomRight;
+
 
 void
 display(void)
@@ -110,7 +245,7 @@ display(void)
 	backMiddleLeft.drawBox();
 	backMiddleMiddle.drawBox();
 	backMiddleRight.drawBox();
-	
+
 	backBottomLeft.drawBox();
 	backBottomMiddle.drawBox();
 	backBottomRight.drawBox();
@@ -151,9 +286,9 @@ init(void)
 	frontTopLeft.setColours(1.0, 1.0, 0.0, 1);
 	frontTopLeft.setColours(1.0, 0.5, 0.0, 5);
 
-	/*frontTopLeft.setColours(1.0, 1.0, 1.0, 2);	//extra colours for testing just the one cube
-	frontTopLeft.setColours(1.0, 0.0, 0.0, 3);
-	frontTopLeft.setColours(0.0, 0.0, 1.0, 4);*/
+	//frontTopLeft.setColours(1.0, 1.0, 1.0, 2);
+	//frontTopLeft.setColours(1.0, 0.0, 0.0, 3);
+	//frontTopLeft.setColours(0.0, 0.0, 1.0, 4);
 
 	frontTopMiddle = cube(-0.3, 0.3, 0.32, 0.9, 0.9, 0.32);
 	frontTopMiddle.setColours(1.0, 1.0, 0.0, 1);
@@ -163,18 +298,18 @@ init(void)
 	frontTopRight.setColours(1.0, 1.0, 0.0, 1);
 	frontTopRight.setColours(1.0, 1.0, 1.0, 2);
 	frontTopRight.setColours(1.0, 0.5, 0.0, 5);
-	
+
 	frontMiddleLeft = cube(-0.9, -0.32, -0.3, 0.3, 0.9, 0.32);
 	frontMiddleLeft.setColours(0.0, 1.0, 0.0, 0);
 	frontMiddleLeft.setColours(1.0, 0.5, 0.0, 5);
 
 	frontMiddleMiddle = cube(-0.3, 0.3, -0.3, 0.3, 0.9, 0.32);
 	frontMiddleMiddle.setColours(1.0, 0.5, 0.0, 5);
-	
+
 	frontMiddleRight = cube(0.32, 0.9, -0.3, 0.3, 0.9, 0.32);
 	frontMiddleRight.setColours(1.0, 1.0, 1.0, 2);
 	frontMiddleRight.setColours(1.0, 0.5, 0.0, 5);
-	
+
 	frontBottomLeft = cube(-0.9, -0.32, -0.9, -0.32, 0.9, 0.32);
 	frontBottomLeft.setColours(0.0, 1.0, 0.0, 0);
 	frontBottomLeft.setColours(1.0, 0.0, 0.0, 3);
@@ -183,7 +318,7 @@ init(void)
 	frontBottomMiddle = cube(-0.3, 0.3, -0.9, -0.32, 0.9, 0.32);
 	frontBottomMiddle.setColours(1.0, 0.0, 0.0, 3);
 	frontBottomMiddle.setColours(1.0, 0.5, 0.0, 5);
-	
+
 	frontBottomRight = cube(0.32, 0.9, -0.9, -0.32, 0.9, 0.32);
 	frontBottomRight.setColours(1.0, 1.0, 1.0, 2);
 	frontBottomRight.setColours(1.0, 0.0, 0.0, 3);
@@ -211,14 +346,14 @@ init(void)
 	middleBottomLeft = cube(-0.9, -0.32, -0.9, -0.32, 0.3, -0.3);
 	middleBottomLeft.setColours(0.0, 1.0, 0.0, 0);
 	middleBottomLeft.setColours(1.0, 0.0, 0.0, 3);
-	
+
 	middleBottomMiddle = cube(-0.3, 0.3, -0.9, -0.32, 0.3, -0.3);
 	middleBottomMiddle.setColours(1.0, 0.0, 0.0, 3);
-	
+
 	middleBottomRight = cube(0.32, 0.9, -0.9, -0.32, 0.3, -0.3);
 	middleBottomRight.setColours(1.0, 1.0, 1.0, 2);
 	middleBottomRight.setColours(1.0, 0.0, 0.0, 3);
-	
+
 	backTopLeft = cube(-0.9, -0.32, 0.32, 0.9, -0.32, -0.9);
 	backTopLeft.setColours(0.0, 1.0, 0.0, 0);
 	backTopLeft.setColours(1.0, 1.0, 0.0, 1);
@@ -227,7 +362,7 @@ init(void)
 	backTopMiddle = cube(-0.3, 0.3, 0.32, 0.9, -0.32, -0.9);
 	backTopMiddle.setColours(1.0, 1.0, 0.0, 1);
 	backTopMiddle.setColours(0.0, 0.0, 1.0, 4);
-	
+
 	backTopRight = cube(0.32, 0.9, 0.32, 0.9, -0.32, -0.9);
 	backTopRight.setColours(1.0, 1.0, 0.0, 1);
 	backTopRight.setColours(1.0, 1.0, 1.0, 2);
@@ -239,7 +374,7 @@ init(void)
 
 	backMiddleMiddle = cube(-0.3, 0.3, -0.3, 0.3, -0.32, -0.9);
 	backMiddleMiddle.setColours(0.0, 0.0, 1.0, 4);
-	
+
 	backMiddleRight = cube(0.32, 0.9, -0.3, 0.3, -0.32, -0.9);
 	backMiddleRight.setColours(1.0, 1.0, 1.0, 2);
 	backMiddleRight.setColours(0.0, 0.0, 1.0, 4);
@@ -248,11 +383,11 @@ init(void)
 	backBottomLeft.setColours(0.0, 1.0, 0.0, 0);
 	backBottomLeft.setColours(1.0, 0.0, 0.0, 3);
 	backBottomLeft.setColours(0.0, 0.0, 1.0, 4);
-	
+
 	backBottomMiddle = cube(-0.3, 0.3, -0.9, -0.32, -0.32, -0.9);
 	backBottomMiddle.setColours(1.0, 0.0, 0.0, 3);
 	backBottomMiddle.setColours(0.0, 0.0, 1.0, 4);
-	
+
 	backBottomRight = cube(0.32, 0.9, -0.9, -0.32, -0.32, -0.9);
 	backBottomRight.setColours(1.0, 1.0, 1.0, 2);
 	backBottomRight.setColours(1.0, 0.0, 0.0, 3);
@@ -272,22 +407,46 @@ init(void)
 		0.0, 1.0, 0.);      /* up is in positive Y direction */
 
 							/* Adjust cube position to be asthetic angle. */
-	//glTranslatef(0.0, 0.0, -1.0);
-	//glRotatef(60, 1.0, 0.0, 0.0);
-	//glRotatef(-20, 0.0, 0.0, 1.0);
+	glTranslatef(0.0, 0.0, -1.0);
+	glRotatef(60, 1.0, 0.0, 0.0);
+	glRotatef(-20, 0.0, 0.0, 1.0);
 
 }
 
 
 void rotationKeys(int key, int x, int y) {
 	if (key == GLUT_KEY_RIGHT) {
-		frontTopLeft.rotate(0);
+		frontTopLeft.rotate(CW, ZSIDE, NAT);
+		frontTopMiddle.rotate(CW, ZSIDE, NAT);
+		frontTopRight.rotate(CW, ZSIDE, NAT);
+		frontMiddleLeft.rotate(CW, ZSIDE, NAT);
+		frontMiddleMiddle.rotate(CW, ZSIDE, NAT);
+		frontMiddleRight.rotate(CW, ZSIDE, NAT);
+		frontBottomLeft.rotate(CW, ZSIDE, NAT);
+		frontBottomMiddle.rotate(CW, ZSIDE, NAT);
+		frontBottomRight.rotate(CW, ZSIDE, NAT);
 	}
 	else if (key == GLUT_KEY_LEFT) {
-
+		frontTopLeft.rotate(CW, XSIDE, NAT);
+		middleTopLeft.rotate(CW, XSIDE, NAT);
+		backTopLeft.rotate(CW, XSIDE, NAT);
+		frontMiddleLeft.rotate(CW, XSIDE, NAT);
+		middleMiddleLeft.rotate(CW, XSIDE, NAT);
+		backMiddleLeft.rotate(CW, XSIDE, NAT);
+		frontBottomLeft.rotate(CW, XSIDE, NAT);
+		middleBottomLeft.rotate(CW, XSIDE, NAT);
+		backBottomLeft.rotate(CW, XSIDE, NAT);
 	}
 	else if (key == GLUT_KEY_UP) {
-
+		frontTopLeft.rotate(CW, YSIDE, NAT);
+		frontTopMiddle.rotate(CW, YSIDE, NAT);
+		frontTopRight.rotate(CW, YSIDE, NAT);
+		middleTopLeft.rotate(CW, YSIDE, NAT);
+		middleTopMiddle.rotate(CW, YSIDE, NAT);
+		middleTopRight.rotate(CW, YSIDE, NAT);
+		backTopLeft.rotate(CW, YSIDE, NAT);
+		backTopMiddle.rotate(CW, YSIDE, NAT);
+		backTopRight.rotate(CW, YSIDE, NAT);
 	}
 	else if (key == GLUT_KEY_DOWN) {
 
