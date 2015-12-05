@@ -40,18 +40,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\RealProgramming4Kids\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\include;C:\Users\RealProgramming4Kids\Downloads\freeglut-MinGW-3.0.0-1.mp\freeglut\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\RealProgramming4Kids\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\lib;C:\Users\RealProgramming4Kids\Downloads\freeglut-MinGW-3.0.0-1.mp\freeglut\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>GlewandGlut\glew-1.11.0\include;GlewandGlut\freeglut\include;$(IncludePath)</IncludePath>
+    <LibraryPath>GlewandGlut\glew-1.11.0\lib;GlewandGlut\freeglut\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>GlewandGlut\glew-1.11.0\include;GlewandGlut\freeglut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\GlewandGlut\glew-1.11.0\lib;$(ProjectDir)\GlewandGlut\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
