@@ -1,7 +1,10 @@
+/*
 #include <windows.h> // use proper includes for your system
 #include <iostream>
 #include <vector>
 #include <string>
+#ifndef _parser // must be unique name in the project
+#define _parser
 std::vector<std::string> rubix_parser(std::string inputs)
 {	// declare num for use later
 	int num;
@@ -22,6 +25,7 @@ std::vector<std::string> rubix_parser(std::string inputs)
 	}
 	return rotations;
 }
+#endif
 /*
 int main(int argc, char** argv)
 {

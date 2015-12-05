@@ -7,7 +7,11 @@
 #include <gl/glut.h>
 #include <cmath>
 #include <iostream>
-
+#include <vector>
+#include <string>
+#include <stdlib.h>
+#include <thread>
+//#include "cube_parser.cpp"
 class cube {
 public:
 	double colours[6][3] = { { 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
@@ -236,6 +240,8 @@ cube * temp;
 
 cube c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27;
 
+int wait_time;
+int solution_boolean = 0;
 void
 display(void)
 {
@@ -283,6 +289,9 @@ display(void)
 void
 init(void)
 {
+	//initilize global
+	wait_time = 500;
+
 	//double colours[6][3] = { {0.0, 1.0, 0.0}, {1.0, 1.0, 0.0}, {1.0, 1.0, 1.0},  {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 0.5, 0.0} };
 	c1 = cube(-0.9, -0.32, 0.32, 0.9, 0.9, 0.32);
 	c1.setColours(0.0, 1.0, 0.0, 0);
@@ -440,6 +449,9 @@ init(void)
 	glTranslatef(0.0, 0.0, -1.0);
 	glRotatef(60, 1.0, 0.0, 0.0);
 	glRotatef(-20, 0.0, 0.0, 1.0);
+
+
+	
 
 }
 
@@ -741,21 +753,94 @@ void rotateBottomCCW() {
 	middleBottomLeft = temp;
 }
 
+
+std::vector<std::string> rubix_parser(std::string inputs)
+{	// declare num for use later
+	int num;
+	// declare rotations to contain additions later
+	std::vector<std::string> rotations;
+	// declare current as a temporary string variable
+	std::string current;
+	//for loop. start at zero count up by threes to jump "c# " characters
+	for (size_t current_index = 0; current_index<inputs.size(); current_index = current_index + 3) {
+		//covert the char value from the string to an integer by subtracting ASCI 0
+		num = inputs[current_index + 1] - '0';
+		//take a 1 character substring of the current char so that we maintain string type
+		current = inputs.substr(current_index, 1);
+		//algorithm specifies number of rotations
+		// for each rotation add it to the end of the vector
+		for (int y = 0; y<num; y++)
+			rotations.push_back(current);
+	}
+	return rotations;
+}
+
+void rotation_instructions(std::string rot_instructs) {
+		if (rot_instructs == "R") {
+			rotateRightCCW();
+		}
+		else if (rot_instructs == "L") {
+			rotateLeftCCW();
+		}
+		else if (rot_instructs == "U") {
+			rotateTopCCW();
+		}
+		else if (rot_instructs == "D") {
+			rotateBottomCCW();
+		}
+		else if (rot_instructs == "F") {
+			rotateFrontCCW();
+		}
+		else if (rot_instructs == "B") {
+			rotateBackCCW();
+		}
+		
+}
+
+void loop_solution() {
+	//idea is this will be replaced with a call to the solver
+	std::string temporary_string = "U3 B3 F3 B3 D2 D1 F2 L3 R3";
+	std::vector<std::string> rotate_vector = rubix_parser(temporary_string);
+	for (std::vector<std::string>::size_type i = 0; i != rotate_vector.size(); i++) {
+		rotation_instructions(rotate_vector[i]);
+		Sleep(wait_time);
+		//update the display
+		display();
+		//glutPostRedisplay();
+	}
+}
+void myKeyboard(unsigned char key, int x, int y)
+{
+	//preliminary rotations attempt
+	if (key == 'e' && solution_boolean==0) {
+		solution_boolean += 1;
+		loop_solution();
+		
+		//std:: thread t1(loop_solution);
+	}
+	
+}
 void rotationKeys(int key, int x, int y) {
 	if (key == GLUT_KEY_RIGHT) {
-		rotateFrontCCW();
+		//rotateFrontCCW();
+		wait_time = wait_time + 10;
 	}
 	else if (key == GLUT_KEY_LEFT) {
-		rotateLeftCCW();
+		//rotateLeftCCW();
+		wait_time = wait_time - 10;
 	}
 	else if (key == GLUT_KEY_UP) {
-		rotateTopCCW();
+		//rotateTopCCW();
 	}
 	else if (key == GLUT_KEY_DOWN) {
 		glRotatef(15, 1.0, 1.0, 1.0);
 	}
 	glutPostRedisplay();
+
 }
+
+
+
 
 int
 main(int argc, char **argv)
@@ -765,6 +850,10 @@ main(int argc, char **argv)
 	glutCreateWindow("Rubik's Cube");
 	glutDisplayFunc(display);
 	glutSpecialFunc(rotationKeys);
+	glutKeyboardFunc(myKeyboard);
+
+	//string temp should be replaced with the data from the cube solver;
+	
 	init();
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
