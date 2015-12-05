@@ -216,63 +216,66 @@ private:
 
 bool CW = 0;
 bool CCW = 1;
-int XSIDE = 0;
-int YSIDE = 1;
-int ZSIDE = 2;
-bool NAT = 0;
-bool REV = 1;
+int XSIDE = 0; //left and right
+int YSIDE = 1; //top and bottom
+int ZSIDE = 2; //front and back
+bool NAT = 0; //top, left, front
+bool REV = 1; //bottom, right, back
 
-cube backTopLeft, backTopMiddle, backTopRight;
-cube backMiddleLeft, backMiddleMiddle, backMiddleRight;
-cube backBottomLeft, backBottomMiddle, backBottomRight;
-cube middleTopLeft, middleTopMiddle, middleTopRight;
-cube middleMiddleLeft, middleMiddleMiddle, middleMiddleRight;
-cube middleBottomLeft, middleBottomMiddle, middleBottomRight;
-cube frontTopLeft, frontTopMiddle, frontTopRight;
-cube frontMiddleLeft, frontMiddleMiddle, frontMiddleRight;
-cube frontBottomLeft, frontBottomMiddle, frontBottomRight;
+cube * backTopLeft, * backTopMiddle, * backTopRight;
+cube * backMiddleLeft, * backMiddleMiddle, * backMiddleRight;
+cube * backBottomLeft, * backBottomMiddle, * backBottomRight;
+cube * middleTopLeft, * middleTopMiddle, * middleTopRight;
+cube * middleMiddleLeft, * middleMiddleMiddle, * middleMiddleRight;
+cube * middleBottomLeft, * middleBottomMiddle, * middleBottomRight;
+cube * frontTopLeft, * frontTopMiddle, * frontTopRight;
+cube * frontMiddleLeft, * frontMiddleMiddle, * frontMiddleRight;
+cube * frontBottomLeft, * frontBottomMiddle, * frontBottomRight;
 
+cube * temp;
+
+cube c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27;
 
 void
 display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	backTopLeft.drawBox();
-	backTopMiddle.drawBox();
-	backTopRight.drawBox();
+	c1.drawBox();
+	c2.drawBox();
+	c3.drawBox();
 
-	backMiddleLeft.drawBox();
-	backMiddleMiddle.drawBox();
-	backMiddleRight.drawBox();
+	c4.drawBox();
+	c5.drawBox();
+	c6.drawBox();
 
-	backBottomLeft.drawBox();
-	backBottomMiddle.drawBox();
-	backBottomRight.drawBox();
+	c7.drawBox();
+	c8.drawBox();
+	c9.drawBox();
 
-	middleTopLeft.drawBox();
-	middleTopMiddle.drawBox();
-	middleTopRight.drawBox();
+	c10.drawBox();
+	c11.drawBox();
+	c12.drawBox();
 
-	middleMiddleLeft.drawBox();
-	middleMiddleMiddle.drawBox();
-	middleMiddleRight.drawBox();
+	c13.drawBox();
+	c14.drawBox();
+	c15.drawBox();
 
-	middleBottomLeft.drawBox();
-	middleBottomMiddle.drawBox();
-	middleBottomRight.drawBox();
+	c16.drawBox();
+	c17.drawBox();
+	c18.drawBox();
 
-	frontTopLeft.drawBox();
-	frontTopMiddle.drawBox();
-	frontTopRight.drawBox();
+	c19.drawBox();
+	c20.drawBox();
+	c21.drawBox();
 
-	frontMiddleLeft.drawBox();
-	frontMiddleMiddle.drawBox();
-	frontMiddleRight.drawBox();
+	c22.drawBox();
+	c23.drawBox();
+	c24.drawBox();
 
-	frontBottomLeft.drawBox();
-	frontBottomMiddle.drawBox();
-	frontBottomRight.drawBox();
+	c25.drawBox();
+	c26.drawBox();
+	c27.drawBox();
 
 	glutSwapBuffers();
 }
@@ -281,117 +284,144 @@ void
 init(void)
 {
 	//double colours[6][3] = { {0.0, 1.0, 0.0}, {1.0, 1.0, 0.0}, {1.0, 1.0, 1.0},  {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 0.5, 0.0} };
-	frontTopLeft = cube(-0.9, -0.32, 0.32, 0.9, 0.9, 0.32);
-	frontTopLeft.setColours(0.0, 1.0, 0.0, 0);
-	frontTopLeft.setColours(1.0, 1.0, 0.0, 1);
-	frontTopLeft.setColours(1.0, 0.5, 0.0, 5);
+	c1 = cube(-0.9, -0.32, 0.32, 0.9, 0.9, 0.32);
+	c1.setColours(0.0, 1.0, 0.0, 0);
+	c1.setColours(1.0, 1.0, 0.0, 1);
+	c1.setColours(1.0, 0.5, 0.0, 5);
+	frontTopLeft = &c1;
 
 	//frontTopLeft.setColours(1.0, 1.0, 1.0, 2);
 	//frontTopLeft.setColours(1.0, 0.0, 0.0, 3);
 	//frontTopLeft.setColours(0.0, 0.0, 1.0, 4);
 
-	frontTopMiddle = cube(-0.3, 0.3, 0.32, 0.9, 0.9, 0.32);
-	frontTopMiddle.setColours(1.0, 1.0, 0.0, 1);
-	frontTopMiddle.setColours(1.0, 0.5, 0.0, 5);
+	c2 = cube(-0.3, 0.3, 0.32, 0.9, 0.9, 0.32);
+	c2.setColours(1.0, 1.0, 0.0, 1);
+	c2.setColours(1.0, 0.5, 0.0, 5);
+	frontTopMiddle = &c2;
 
-	frontTopRight = cube(0.32, 0.9, 0.32, 0.9, 0.9, 0.32);
-	frontTopRight.setColours(1.0, 1.0, 0.0, 1);
-	frontTopRight.setColours(1.0, 1.0, 1.0, 2);
-	frontTopRight.setColours(1.0, 0.5, 0.0, 5);
+	c3 = cube(0.32, 0.9, 0.32, 0.9, 0.9, 0.32);
+	c3.setColours(1.0, 1.0, 0.0, 1);
+	c3.setColours(1.0, 1.0, 1.0, 2);
+	c3.setColours(1.0, 0.5, 0.0, 5);
+	frontTopRight = &c3;	
 
-	frontMiddleLeft = cube(-0.9, -0.32, -0.3, 0.3, 0.9, 0.32);
-	frontMiddleLeft.setColours(0.0, 1.0, 0.0, 0);
-	frontMiddleLeft.setColours(1.0, 0.5, 0.0, 5);
+	c4 = cube(-0.9, -0.32, -0.3, 0.3, 0.9, 0.32);
+	c4.setColours(0.0, 1.0, 0.0, 0);
+	c4.setColours(1.0, 0.5, 0.0, 5);
+	frontMiddleLeft = &c4;	
 
-	frontMiddleMiddle = cube(-0.3, 0.3, -0.3, 0.3, 0.9, 0.32);
-	frontMiddleMiddle.setColours(1.0, 0.5, 0.0, 5);
+	c5 = cube(-0.3, 0.3, -0.3, 0.3, 0.9, 0.32);
+	c5.setColours(1.0, 0.5, 0.0, 5);
+	frontMiddleMiddle = &c5;
 
-	frontMiddleRight = cube(0.32, 0.9, -0.3, 0.3, 0.9, 0.32);
-	frontMiddleRight.setColours(1.0, 1.0, 1.0, 2);
-	frontMiddleRight.setColours(1.0, 0.5, 0.0, 5);
+	c6 = cube(0.32, 0.9, -0.3, 0.3, 0.9, 0.32);
+	c6.setColours(1.0, 1.0, 1.0, 2);
+	c6.setColours(1.0, 0.5, 0.0, 5);
+	frontMiddleRight = &c6;
 
-	frontBottomLeft = cube(-0.9, -0.32, -0.9, -0.32, 0.9, 0.32);
-	frontBottomLeft.setColours(0.0, 1.0, 0.0, 0);
-	frontBottomLeft.setColours(1.0, 0.0, 0.0, 3);
-	frontBottomLeft.setColours(1.0, 0.5, 0.0, 5);
+	c7 = cube(-0.9, -0.32, -0.9, -0.32, 0.9, 0.32);
+	c7.setColours(0.0, 1.0, 0.0, 0);
+	c7.setColours(1.0, 0.0, 0.0, 3);
+	c7.setColours(1.0, 0.5, 0.0, 5);
+	frontBottomLeft = &c7;
 
-	frontBottomMiddle = cube(-0.3, 0.3, -0.9, -0.32, 0.9, 0.32);
-	frontBottomMiddle.setColours(1.0, 0.0, 0.0, 3);
-	frontBottomMiddle.setColours(1.0, 0.5, 0.0, 5);
+	c8 = cube(-0.3, 0.3, -0.9, -0.32, 0.9, 0.32);
+	c8.setColours(1.0, 0.0, 0.0, 3);
+	c8.setColours(1.0, 0.5, 0.0, 5);
+	frontBottomMiddle = &c8;
 
-	frontBottomRight = cube(0.32, 0.9, -0.9, -0.32, 0.9, 0.32);
-	frontBottomRight.setColours(1.0, 1.0, 1.0, 2);
-	frontBottomRight.setColours(1.0, 0.0, 0.0, 3);
-	frontBottomRight.setColours(1.0, 0.5, 0.0, 5);
+	c9 = cube(0.32, 0.9, -0.9, -0.32, 0.9, 0.32);
+	c9.setColours(1.0, 1.0, 1.0, 2);
+	c9.setColours(1.0, 0.0, 0.0, 3);
+	c9.setColours(1.0, 0.5, 0.0, 5);
+	frontBottomRight = &c9;
 
-	middleTopLeft = cube(-0.9, -0.32, 0.32, 0.9, 0.3, -0.3);
-	middleTopLeft.setColours(0.0, 1.0, 0.0, 0);
-	middleTopLeft.setColours(1.0, 1.0, 0.0, 1);
+	c10 = cube(-0.9, -0.32, 0.32, 0.9, 0.3, -0.3);
+	c10.setColours(0.0, 1.0, 0.0, 0);
+	c10.setColours(1.0, 1.0, 0.0, 1);
+	middleTopLeft = &c10;
 
-	middleTopMiddle = cube(-0.3, 0.3, 0.32, 0.9, 0.3, -0.3);
-	middleTopMiddle.setColours(1.0, 1.0, 0.0, 1);
+	c11 = cube(-0.3, 0.3, 0.32, 0.9, 0.3, -0.3);
+	c11.setColours(1.0, 1.0, 0.0, 1);
+	middleTopMiddle = &c11;
 
-	middleTopRight = cube(0.32, 0.9, 0.32, 0.9, 0.3, -0.3);
-	middleTopRight.setColours(1.0, 1.0, 0.0, 1);
-	middleTopRight.setColours(1.0, 1.0, 1.0, 2);
+	c12 = cube(0.32, 0.9, 0.32, 0.9, 0.3, -0.3);
+	c12.setColours(1.0, 1.0, 0.0, 1);
+	c12.setColours(1.0, 1.0, 1.0, 2);
+	middleTopRight = &c12;
 
-	middleMiddleLeft = cube(-0.9, -0.32, -0.3, 0.3, 0.3, -0.3);
-	middleMiddleLeft.setColours(0.0, 1.0, 0.0, 0);
+	c13 = cube(-0.9, -0.32, -0.3, 0.3, 0.3, -0.3);
+	c13 .setColours(0.0, 1.0, 0.0, 0);
+	middleMiddleLeft = &c13;
 
-	middleMiddleMiddle = cube(-0.3, 0.3, -0.3, 0.3, 0.3, -0.3);
+	c27 = cube(-0.3, 0.3, -0.3, 0.3, 0.3, -0.3);
+	middleMiddleMiddle = &c27;
 
-	middleMiddleRight = cube(0.32, 0.9, -0.3, 0.3, 0.3, -0.3);
-	middleMiddleRight.setColours(1.0, 1.0, 1.0, 2);
+	c14 = cube(0.32, 0.9, -0.3, 0.3, 0.3, -0.3);
+	c14.setColours(1.0, 1.0, 1.0, 2);
+	middleMiddleRight = &c14;
 
-	middleBottomLeft = cube(-0.9, -0.32, -0.9, -0.32, 0.3, -0.3);
-	middleBottomLeft.setColours(0.0, 1.0, 0.0, 0);
-	middleBottomLeft.setColours(1.0, 0.0, 0.0, 3);
+	c15 = cube(-0.9, -0.32, -0.9, -0.32, 0.3, -0.3);
+	c15.setColours(0.0, 1.0, 0.0, 0);
+	c15.setColours(1.0, 0.0, 0.0, 3);
+	middleBottomLeft = &c15;
 
-	middleBottomMiddle = cube(-0.3, 0.3, -0.9, -0.32, 0.3, -0.3);
-	middleBottomMiddle.setColours(1.0, 0.0, 0.0, 3);
+	c16 = cube(-0.3, 0.3, -0.9, -0.32, 0.3, -0.3);
+	c16.setColours(1.0, 0.0, 0.0, 3);
+	middleBottomMiddle = &c16;
 
-	middleBottomRight = cube(0.32, 0.9, -0.9, -0.32, 0.3, -0.3);
-	middleBottomRight.setColours(1.0, 1.0, 1.0, 2);
-	middleBottomRight.setColours(1.0, 0.0, 0.0, 3);
+	c17 = cube(0.32, 0.9, -0.9, -0.32, 0.3, -0.3);
+	c17.setColours(1.0, 1.0, 1.0, 2);
+	c17.setColours(1.0, 0.0, 0.0, 3);
+	middleBottomRight = &c17;
 
-	backTopLeft = cube(-0.9, -0.32, 0.32, 0.9, -0.32, -0.9);
-	backTopLeft.setColours(0.0, 1.0, 0.0, 0);
-	backTopLeft.setColours(1.0, 1.0, 0.0, 1);
-	backTopLeft.setColours(0.0, 0.0, 1.0, 4);
+	c18 = cube(-0.9, -0.32, 0.32, 0.9, -0.32, -0.9);
+	c18.setColours(0.0, 1.0, 0.0, 0);
+	c18.setColours(1.0, 1.0, 0.0, 1);
+	c18.setColours(0.0, 0.0, 1.0, 4);
+	backTopLeft = &c18;
 
-	backTopMiddle = cube(-0.3, 0.3, 0.32, 0.9, -0.32, -0.9);
-	backTopMiddle.setColours(1.0, 1.0, 0.0, 1);
-	backTopMiddle.setColours(0.0, 0.0, 1.0, 4);
+	c19 = cube(-0.3, 0.3, 0.32, 0.9, -0.32, -0.9);
+	c19.setColours(1.0, 1.0, 0.0, 1);
+	c19.setColours(0.0, 0.0, 1.0, 4);
+	backTopMiddle = &c19;
 
-	backTopRight = cube(0.32, 0.9, 0.32, 0.9, -0.32, -0.9);
-	backTopRight.setColours(1.0, 1.0, 0.0, 1);
-	backTopRight.setColours(1.0, 1.0, 1.0, 2);
-	backTopRight.setColours(0.0, 0.0, 1.0, 4);
+	c20 = cube(0.32, 0.9, 0.32, 0.9, -0.32, -0.9);
+	c20.setColours(1.0, 1.0, 0.0, 1);
+	c20.setColours(1.0, 1.0, 1.0, 2);
+	c20.setColours(0.0, 0.0, 1.0, 4);
+	backTopRight = &c20;
 
-	backMiddleLeft = cube(-0.9, -0.32, -0.3, 0.3, -0.32, -0.9);
-	backMiddleLeft.setColours(0.0, 1.0, 0.0, 0);
-	backMiddleLeft.setColours(0.0, 0.0, 1.0, 4);
+	c21 = cube(-0.9, -0.32, -0.3, 0.3, -0.32, -0.9);
+	c21.setColours(0.0, 1.0, 0.0, 0);
+	c21.setColours(0.0, 0.0, 1.0, 4);
+	backMiddleLeft = &c21;
 
-	backMiddleMiddle = cube(-0.3, 0.3, -0.3, 0.3, -0.32, -0.9);
-	backMiddleMiddle.setColours(0.0, 0.0, 1.0, 4);
+	c22 = cube(-0.3, 0.3, -0.3, 0.3, -0.32, -0.9);
+	c22.setColours(0.0, 0.0, 1.0, 4);
+	backMiddleMiddle = &c22;
 
-	backMiddleRight = cube(0.32, 0.9, -0.3, 0.3, -0.32, -0.9);
-	backMiddleRight.setColours(1.0, 1.0, 1.0, 2);
-	backMiddleRight.setColours(0.0, 0.0, 1.0, 4);
+	c23 = cube(0.32, 0.9, -0.3, 0.3, -0.32, -0.9);
+	c23.setColours(1.0, 1.0, 1.0, 2);
+	c23.setColours(0.0, 0.0, 1.0, 4);
+	backMiddleRight = &c23;
 
-	backBottomLeft = cube(-0.9, -0.32, -0.9, -0.32, -0.32, -0.9);
-	backBottomLeft.setColours(0.0, 1.0, 0.0, 0);
-	backBottomLeft.setColours(1.0, 0.0, 0.0, 3);
-	backBottomLeft.setColours(0.0, 0.0, 1.0, 4);
+	c24 = cube(-0.9, -0.32, -0.9, -0.32, -0.32, -0.9);
+	c24.setColours(0.0, 1.0, 0.0, 0);
+	c24.setColours(1.0, 0.0, 0.0, 3);
+	c24.setColours(0.0, 0.0, 1.0, 4);
+	backBottomLeft = &c24;
 
-	backBottomMiddle = cube(-0.3, 0.3, -0.9, -0.32, -0.32, -0.9);
-	backBottomMiddle.setColours(1.0, 0.0, 0.0, 3);
-	backBottomMiddle.setColours(0.0, 0.0, 1.0, 4);
+	c25 = cube(-0.3, 0.3, -0.9, -0.32, -0.32, -0.9);
+	c25.setColours(1.0, 0.0, 0.0, 3);
+	c25.setColours(0.0, 0.0, 1.0, 4);
+	backBottomMiddle = &c25;
 
-	backBottomRight = cube(0.32, 0.9, -0.9, -0.32, -0.32, -0.9);
-	backBottomRight.setColours(1.0, 1.0, 1.0, 2);
-	backBottomRight.setColours(1.0, 0.0, 0.0, 3);
-	backBottomRight.setColours(0.0, 0.0, 1.0, 4);
+	c26 = cube(0.32, 0.9, -0.9, -0.32, -0.32, -0.9);
+	c26.setColours(1.0, 1.0, 1.0, 2);
+	c26.setColours(1.0, 0.0, 0.0, 3);
+	c26.setColours(0.0, 0.0, 1.0, 4);
+	backBottomRight = &c26;
 
 	/* Setup the view of the cube. */
 	glMatrixMode(GL_PROJECTION);
@@ -413,43 +443,316 @@ init(void)
 
 }
 
+void rotateFrontCW()
+{
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CW, ZSIDE, NAT);
+		frontTopMiddle->rotate(CW, ZSIDE, NAT);
+		frontTopRight->rotate(CW, ZSIDE, NAT);
+		frontMiddleLeft->rotate(CW, ZSIDE, NAT);
+		frontMiddleMiddle->rotate(CW, ZSIDE, NAT);
+		frontMiddleRight->rotate(CW, ZSIDE, NAT);
+		frontBottomLeft->rotate(CW, ZSIDE, NAT);
+		frontBottomMiddle->rotate(CW, ZSIDE, NAT);
+		frontBottomRight->rotate(CW, ZSIDE, NAT);
+	}
+	 
+	temp = frontTopLeft;
+	frontTopLeft = frontBottomLeft;
+	frontBottomLeft = frontBottomRight;
+	frontBottomRight = frontTopRight;
+	frontTopRight = temp;
+
+	temp = frontTopMiddle;
+	frontTopMiddle = frontMiddleLeft;
+	frontMiddleLeft = frontBottomMiddle;
+	frontBottomMiddle = frontMiddleRight;
+	frontMiddleRight = temp;
+}
+void rotateFrontCCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CCW, ZSIDE, NAT);
+		frontTopMiddle->rotate(CCW, ZSIDE, NAT);
+		frontTopRight->rotate(CCW, ZSIDE, NAT);
+		frontMiddleLeft->rotate(CCW, ZSIDE, NAT);
+		frontMiddleMiddle->rotate(CCW, ZSIDE, NAT);
+		frontMiddleRight->rotate(CCW, ZSIDE, NAT);
+		frontBottomLeft->rotate(CCW, ZSIDE, NAT);
+		frontBottomMiddle->rotate(CCW, ZSIDE, NAT);
+		frontBottomRight->rotate(CCW, ZSIDE, NAT);
+	}
+
+	temp = frontTopLeft;
+	frontTopLeft = frontTopRight;
+	frontTopRight = frontBottomRight;
+	frontBottomRight = frontBottomLeft;
+	frontBottomLeft = temp;
+
+	temp = frontTopMiddle;
+	frontTopMiddle = frontMiddleRight;
+	frontMiddleRight = frontBottomMiddle;
+	frontBottomMiddle = frontMiddleLeft;
+	frontMiddleLeft = temp;
+}
+void rotateBackCW() {
+	for (int i = 0; i < 16; i++) {
+		backTopLeft->rotate(CW, ZSIDE, REV);
+		backTopMiddle->rotate(CW, ZSIDE, REV);
+		backTopRight->rotate(CW, ZSIDE, REV);
+		backMiddleLeft->rotate(CW, ZSIDE, REV);
+		backMiddleMiddle->rotate(CW, ZSIDE, REV);
+		backMiddleRight->rotate(CW, ZSIDE, REV);
+		backBottomLeft->rotate(CW, ZSIDE, REV);
+		backBottomMiddle->rotate(CW, ZSIDE, REV);
+		backBottomRight->rotate(CW, ZSIDE, REV);
+	}
+
+	temp = backTopLeft;
+	backTopLeft = backTopRight;
+	backTopRight = backBottomRight;
+	backBottomRight = backBottomLeft;
+	backBottomLeft = temp;
+
+	temp = backTopMiddle;
+	backTopMiddle = backMiddleRight;
+	backMiddleRight = backBottomMiddle;
+	backBottomMiddle = backMiddleLeft;
+	backMiddleLeft = temp;
+}
+void rotateBackCCW() {
+	for (int i = 0; i < 16; i++) {
+		backTopLeft->rotate(CCW, ZSIDE, REV);
+		backTopMiddle->rotate(CCW, ZSIDE, REV);
+		backTopRight->rotate(CCW, ZSIDE, REV);
+		backMiddleLeft->rotate(CCW, ZSIDE, REV);
+		backMiddleMiddle->rotate(CCW, ZSIDE, REV);
+		backMiddleRight->rotate(CCW, ZSIDE, REV);
+		backBottomLeft->rotate(CCW, ZSIDE, REV);
+		backBottomMiddle->rotate(CCW, ZSIDE, REV);
+		backBottomRight->rotate(CCW, ZSIDE, REV);
+	}
+
+	temp = backTopLeft;
+	backTopLeft = backBottomLeft;
+	backBottomLeft = backBottomRight;
+	backBottomRight = backTopRight;
+	backTopRight = temp;
+
+	temp = backTopMiddle;
+	backTopMiddle = backMiddleLeft;
+	backMiddleLeft = backBottomMiddle;
+	backBottomMiddle = backMiddleRight;
+	backMiddleRight = temp;
+}
+void rotateLeftCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CW, XSIDE, NAT);
+		middleTopLeft->rotate(CW, XSIDE, NAT);
+		backTopLeft->rotate(CW, XSIDE, NAT);
+		frontMiddleLeft->rotate(CW, XSIDE, NAT);
+		middleMiddleLeft->rotate(CW, XSIDE, NAT);
+		backMiddleLeft->rotate(CW, XSIDE, NAT);
+		frontBottomLeft->rotate(CW, XSIDE, NAT);
+		middleBottomLeft->rotate(CW, XSIDE, NAT);
+		backBottomLeft->rotate(CW, XSIDE, NAT);
+	}
+	temp = frontTopLeft;
+	frontTopLeft = backTopLeft;
+	backTopLeft = backBottomLeft;
+	backBottomLeft = frontBottomLeft;
+	frontBottomLeft = temp;
+
+	temp = middleTopLeft;
+	middleTopLeft = backMiddleLeft;
+	backMiddleLeft = middleBottomLeft;
+	middleBottomLeft = frontMiddleLeft;
+	frontMiddleLeft = temp;
+}
+void rotateLeftCCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CCW, XSIDE, NAT);
+		middleTopLeft->rotate(CCW, XSIDE, NAT);
+		backTopLeft->rotate(CCW, XSIDE, NAT);
+		frontMiddleLeft->rotate(CCW, XSIDE, NAT);
+		middleMiddleLeft->rotate(CCW, XSIDE, NAT);
+		backMiddleLeft->rotate(CCW, XSIDE, NAT);
+		frontBottomLeft->rotate(CCW, XSIDE, NAT);
+		middleBottomLeft->rotate(CCW, XSIDE, NAT);
+		backBottomLeft->rotate(CCW, XSIDE, NAT);
+	}
+	temp = frontTopLeft;
+	frontTopLeft = frontBottomLeft;
+	frontBottomLeft = backBottomLeft;
+	backBottomLeft = backTopLeft;
+	backTopLeft = temp;
+
+	temp = middleTopLeft;
+	middleTopLeft = frontMiddleLeft;
+	frontMiddleLeft = middleBottomLeft;
+	middleBottomLeft = backMiddleLeft;
+	backMiddleLeft = temp;
+}
+void rotateRightCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopRight->rotate(CW, XSIDE, REV);
+		middleTopRight->rotate(CW, XSIDE, REV);
+		backTopRight->rotate(CW, XSIDE, REV);
+		frontMiddleRight->rotate(CW, XSIDE, REV);
+		middleMiddleRight->rotate(CW, XSIDE, REV);
+		backMiddleRight->rotate(CW, XSIDE, REV);
+		frontBottomRight->rotate(CW, XSIDE, REV);
+		middleBottomRight->rotate(CW, XSIDE, REV);
+		backBottomRight->rotate(CW, XSIDE, REV);
+	}
+	temp = frontTopRight;
+	frontTopRight = frontBottomRight;
+	frontBottomRight = backBottomRight;
+	backBottomRight = backTopRight;
+	backTopRight = temp;
+
+	temp = middleTopRight;
+	middleTopRight = frontMiddleRight;
+	frontMiddleRight = middleBottomRight;
+	middleBottomRight = backMiddleRight;
+	backMiddleRight = temp;
+}
+void rotateRightCCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopRight->rotate(CCW, XSIDE, REV);
+		middleTopRight->rotate(CCW, XSIDE, REV);
+		backTopRight->rotate(CCW, XSIDE, REV);
+		frontMiddleRight->rotate(CCW, XSIDE, REV);
+		middleMiddleRight->rotate(CCW, XSIDE, REV);
+		backMiddleRight->rotate(CCW, XSIDE, REV);
+		frontBottomRight->rotate(CCW, XSIDE, REV);
+		middleBottomRight->rotate(CCW, XSIDE, REV);
+		backBottomRight->rotate(CCW, XSIDE, REV);
+	}
+	temp = frontTopRight;
+	frontTopRight = backTopRight;
+	backTopRight = backBottomRight;
+	backBottomRight = frontBottomRight;
+	frontBottomRight = temp;
+
+	temp = middleTopRight;
+	middleTopRight = backMiddleRight;
+	backMiddleRight = middleBottomRight;
+	middleBottomRight = frontMiddleRight;
+	frontMiddleRight = temp;
+}
+void rotateTopCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CW, YSIDE, NAT);
+		frontTopMiddle->rotate(CW, YSIDE, NAT);
+		frontTopRight->rotate(CW, YSIDE, NAT);
+		middleTopLeft->rotate(CW, YSIDE, NAT);
+		middleTopMiddle->rotate(CW, YSIDE, NAT);
+		middleTopRight->rotate(CW, YSIDE, NAT);
+		backTopLeft->rotate(CW, YSIDE, NAT);
+		backTopMiddle->rotate(CW, YSIDE, NAT);
+		backTopRight->rotate(CW, YSIDE, NAT);
+	}
+
+	temp = frontTopLeft;
+	frontTopLeft = frontTopRight;
+	frontTopRight = backTopRight;
+	backTopRight = backTopLeft;
+	backTopLeft = temp;
+
+	temp = frontTopMiddle;
+	frontTopMiddle = middleTopRight;
+	middleTopRight = backTopMiddle;
+	backTopMiddle = middleTopLeft;
+	middleTopLeft = temp;
+}
+void rotateTopCCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CCW, YSIDE, NAT);
+		frontTopMiddle->rotate(CCW, YSIDE, NAT);
+		frontTopRight->rotate(CCW, YSIDE, NAT);
+		middleTopLeft->rotate(CCW, YSIDE, NAT);
+		middleTopMiddle->rotate(CCW, YSIDE, NAT);
+		middleTopRight->rotate(CCW, YSIDE, NAT);
+		backTopLeft->rotate(CCW, YSIDE, NAT);
+		backTopMiddle->rotate(CCW, YSIDE, NAT);
+		backTopRight->rotate(CCW, YSIDE, NAT);
+	}
+
+	temp = frontTopLeft;
+	frontTopLeft = backTopLeft;
+	backTopLeft = backTopRight;
+	backTopRight = frontTopRight;
+	frontTopRight = temp;
+
+	temp = frontTopMiddle;
+	frontTopMiddle = middleTopLeft;
+	middleTopLeft = backTopMiddle;
+	backTopMiddle = middleTopRight;
+	middleTopRight = temp;
+}
+void rotateBottomCW() {
+	for (int i = 0; i < 16; i++) {
+		frontTopLeft->rotate(CCW, YSIDE, REV);
+		frontTopMiddle->rotate(CCW, YSIDE, REV);
+		frontTopRight->rotate(CCW, YSIDE, REV);
+		middleTopLeft->rotate(CCW, YSIDE, REV);
+		middleTopMiddle->rotate(CCW, YSIDE, REV);
+		middleTopRight->rotate(CCW, YSIDE, REV);
+		backTopLeft->rotate(CCW, YSIDE, REV);
+		backTopMiddle->rotate(CCW, YSIDE, REV);
+		backTopRight->rotate(CCW, YSIDE, REV);
+	}
+
+	temp = frontTopLeft;
+	frontTopLeft = frontTopRight;
+	frontTopRight = backTopRight;
+	backTopRight = backTopLeft;
+	backTopLeft = temp;
+
+	temp = frontTopMiddle;
+	frontTopMiddle = middleTopRight;
+	middleTopRight = backTopMiddle;
+	backTopMiddle = middleTopLeft;
+	middleTopLeft = temp;
+}
+void rotateBottomCCW() {
+	for (int i = 0; i < 16; i++) {
+		frontBottomLeft->rotate(CCW, YSIDE, REV);
+		frontBottomMiddle->rotate(CCW, YSIDE, REV);
+		frontBottomRight->rotate(CCW, YSIDE, REV);
+		middleBottomLeft->rotate(CCW, YSIDE, REV);
+		middleBottomMiddle->rotate(CCW, YSIDE, REV);
+		middleBottomRight->rotate(CCW, YSIDE, REV);
+		backBottomLeft->rotate(CCW, YSIDE, REV);
+		backBottomMiddle->rotate(CCW, YSIDE, REV);
+		backBottomRight->rotate(CCW, YSIDE, REV);
+	}
+
+	temp = frontBottomLeft;
+	frontBottomLeft = frontBottomRight;
+	frontBottomRight = backBottomRight;
+	backBottomRight = backBottomLeft;
+	backBottomLeft = temp;
+
+	temp = frontBottomMiddle;
+	frontBottomMiddle = middleBottomRight;
+	middleBottomRight = backBottomMiddle;
+	backBottomMiddle = middleBottomLeft;
+	middleBottomLeft = temp;
+}
 
 void rotationKeys(int key, int x, int y) {
 	if (key == GLUT_KEY_RIGHT) {
-		frontTopLeft.rotate(CW, ZSIDE, NAT);
-		frontTopMiddle.rotate(CW, ZSIDE, NAT);
-		frontTopRight.rotate(CW, ZSIDE, NAT);
-		frontMiddleLeft.rotate(CW, ZSIDE, NAT);
-		frontMiddleMiddle.rotate(CW, ZSIDE, NAT);
-		frontMiddleRight.rotate(CW, ZSIDE, NAT);
-		frontBottomLeft.rotate(CW, ZSIDE, NAT);
-		frontBottomMiddle.rotate(CW, ZSIDE, NAT);
-		frontBottomRight.rotate(CW, ZSIDE, NAT);
+		rotateFrontCCW();
 	}
 	else if (key == GLUT_KEY_LEFT) {
-		frontTopLeft.rotate(CW, XSIDE, NAT);
-		middleTopLeft.rotate(CW, XSIDE, NAT);
-		backTopLeft.rotate(CW, XSIDE, NAT);
-		frontMiddleLeft.rotate(CW, XSIDE, NAT);
-		middleMiddleLeft.rotate(CW, XSIDE, NAT);
-		backMiddleLeft.rotate(CW, XSIDE, NAT);
-		frontBottomLeft.rotate(CW, XSIDE, NAT);
-		middleBottomLeft.rotate(CW, XSIDE, NAT);
-		backBottomLeft.rotate(CW, XSIDE, NAT);
+		rotateLeftCCW();
 	}
 	else if (key == GLUT_KEY_UP) {
-		frontTopLeft.rotate(CW, YSIDE, NAT);
-		frontTopMiddle.rotate(CW, YSIDE, NAT);
-		frontTopRight.rotate(CW, YSIDE, NAT);
-		middleTopLeft.rotate(CW, YSIDE, NAT);
-		middleTopMiddle.rotate(CW, YSIDE, NAT);
-		middleTopRight.rotate(CW, YSIDE, NAT);
-		backTopLeft.rotate(CW, YSIDE, NAT);
-		backTopMiddle.rotate(CW, YSIDE, NAT);
-		backTopRight.rotate(CW, YSIDE, NAT);
+		rotateTopCCW();
 	}
 	else if (key == GLUT_KEY_DOWN) {
-
+		glRotatef(15, 1.0, 1.0, 1.0);
 	}
 	glutPostRedisplay();
 }
