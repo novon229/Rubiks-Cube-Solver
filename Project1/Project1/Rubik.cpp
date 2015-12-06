@@ -178,7 +178,7 @@ private:
 	GLfloat v[8][3];  /* Will be filled in with X,Y,Z vertexes. */
 	GLfloat light_diffuse[4] = { 1.0, 1.0, 1.0, 1.0 };  /* Red diffuse light. */
 	GLfloat light_position[4] = { 1.0, 1.0, 1.0, 0.0 };  /* Infinite light location. */
-	float theta = M_PI_4 / 8;
+	float theta = M_PI_2 / 16;
 	float xMatrix[2][4][4] = {
 		{ { 1, 0, 0, 0 },
 		{ 0, cos(theta), -sin(theta), 0 },
