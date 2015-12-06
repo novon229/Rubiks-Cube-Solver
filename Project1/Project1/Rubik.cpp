@@ -10,7 +10,6 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
-#include <thread>
 //#include "cube_parser.cpp"
 class cube {
 public:
@@ -242,12 +241,18 @@ cube * temp;
 cube c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27;
 
 int wait_time;
+//this is stored as an integer but serves as a boolean to state if the solution is curretnly running or complete
 int solution_boolean = 0;
 int string_length;
+//this tells the display function what tic of a 90 degree rotation it is on
 int animation_tic_count = 0;
+//this tells the display function what index of the rotate vector it should change 
 int current_string_index = 0;
-std::string temporary_string = "U9 B9 F9 D9 L9 R9";
+//this is a string for testing purposes that shows cube face rotations
+std::string temporary_string = "U5 B5 F5 D5 L5 R5";
+//this is the vector for rotating the cube based on temporary string which will eventually be the solution
 std::vector<std::string> rotate_vector;
+//this is the number of tics to do one 90 degree rotation. It needs modified in the cube aswell
 int FRAMES = 32;
 
 
@@ -421,7 +426,8 @@ init(void)
 
 void rotateFrontCW()
 {
-
+		//this handles the rotation for each portion of the cube
+		// it is run FRAMES times before the sides are updtated
 		frontTopLeft->rotate(CW, ZSIDE, NAT);
 		frontTopMiddle->rotate(CW, ZSIDE, NAT);
 		frontTopRight->rotate(CW, ZSIDE, NAT);
@@ -431,21 +437,23 @@ void rotateFrontCW()
 		frontBottomLeft->rotate(CW, ZSIDE, NAT);
 		frontBottomMiddle->rotate(CW, ZSIDE, NAT);
 		frontBottomRight->rotate(CW, ZSIDE, NAT);
-	
+	//only update the cube postions when we have reached the end of a 90 degree rotation
 	if (animation_tic_count == FRAMES) {
 		temp = frontTopLeft;
 		frontTopLeft = frontBottomLeft;
 		frontBottomLeft = frontBottomRight;
 		frontBottomRight = frontTopRight;
 		frontTopRight = temp;
-	temp = frontTopMiddle;
-	frontTopMiddle = frontMiddleLeft;
-	frontMiddleLeft = frontBottomMiddle;
-	frontBottomMiddle = frontMiddleRight;
-	frontMiddleRight = temp;
+		temp = frontTopMiddle;
+		frontTopMiddle = frontMiddleLeft;
+		frontMiddleLeft = frontBottomMiddle;
+		frontBottomMiddle = frontMiddleRight;
+		frontMiddleRight = temp;
 	}
 }
 void rotateFrontCCW() {
+		//this handles the rotation for each portion of the cube
+		// it is run FRAMES times before the sides are updtated
 		frontTopLeft->rotate(CCW, ZSIDE, NAT);
 		frontTopMiddle->rotate(CCW, ZSIDE, NAT);
 		frontTopRight->rotate(CCW, ZSIDE, NAT);
@@ -455,6 +463,7 @@ void rotateFrontCCW() {
 		frontBottomLeft->rotate(CCW, ZSIDE, NAT);
 		frontBottomMiddle->rotate(CCW, ZSIDE, NAT);
 		frontBottomRight->rotate(CCW, ZSIDE, NAT);
+		//only update the cube postions when we have reached the end of a 90 degree rotation		
 		if (animation_tic_count == FRAMES) {
 			temp = frontTopLeft;
 			frontTopLeft = frontTopRight;
@@ -471,6 +480,8 @@ void rotateFrontCCW() {
 
 }
 void rotateBackCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		backTopLeft->rotate(CW, ZSIDE, REV);
 		backTopMiddle->rotate(CW, ZSIDE, REV);
 		backTopRight->rotate(CW, ZSIDE, REV);
@@ -480,8 +491,8 @@ void rotateBackCW() {
 		backBottomLeft->rotate(CW, ZSIDE, REV);
 		backBottomMiddle->rotate(CW, ZSIDE, REV);
 		backBottomRight->rotate(CW, ZSIDE, REV);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
-
 			temp = backTopLeft;
 			backTopLeft = backTopRight;
 			backTopRight = backBottomRight;
@@ -497,6 +508,8 @@ void rotateBackCW() {
 
 	}
 void rotateBackCCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		backTopLeft->rotate(CCW, ZSIDE, REV);
 		backTopMiddle->rotate(CCW, ZSIDE, REV);
 		backTopRight->rotate(CCW, ZSIDE, REV);
@@ -506,8 +519,8 @@ void rotateBackCCW() {
 		backBottomLeft->rotate(CCW, ZSIDE, REV);
 		backBottomMiddle->rotate(CCW, ZSIDE, REV);
 		backBottomRight->rotate(CCW, ZSIDE, REV);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
-
 			temp = backTopLeft;
 			backTopLeft = backBottomLeft;
 			backBottomLeft = backBottomRight;
@@ -523,6 +536,8 @@ void rotateBackCCW() {
 
 	}
 void rotateLeftCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		frontTopLeft->rotate(CW, XSIDE, NAT);
 		middleTopLeft->rotate(CW, XSIDE, NAT);
 		backTopLeft->rotate(CW, XSIDE, NAT);
@@ -532,8 +547,8 @@ void rotateLeftCW() {
 		frontBottomLeft->rotate(CW, XSIDE, NAT);
 		middleBottomLeft->rotate(CW, XSIDE, NAT);
 		backBottomLeft->rotate(CW, XSIDE, NAT);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
-
 			temp = frontTopLeft;
 			frontTopLeft = backTopLeft;
 			backTopLeft = backBottomLeft;
@@ -549,6 +564,8 @@ void rotateLeftCW() {
 
 	}
 void rotateLeftCCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		frontTopLeft->rotate(CCW, XSIDE, NAT);
 		middleTopLeft->rotate(CCW, XSIDE, NAT);
 		backTopLeft->rotate(CCW, XSIDE, NAT);
@@ -558,6 +575,7 @@ void rotateLeftCCW() {
 		frontBottomLeft->rotate(CCW, XSIDE, NAT);
 		middleBottomLeft->rotate(CCW, XSIDE, NAT);
 		backBottomLeft->rotate(CCW, XSIDE, NAT);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
 			temp = frontTopLeft;
 			frontTopLeft = frontBottomLeft;
@@ -573,6 +591,8 @@ void rotateLeftCCW() {
 		}
 	}
 void rotateRightCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		frontTopRight->rotate(CW, XSIDE, REV);
 		middleTopRight->rotate(CW, XSIDE, REV);
 		backTopRight->rotate(CW, XSIDE, REV);
@@ -582,6 +602,7 @@ void rotateRightCW() {
 		frontBottomRight->rotate(CW, XSIDE, REV);
 		middleBottomRight->rotate(CW, XSIDE, REV);
 		backBottomRight->rotate(CW, XSIDE, REV);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
 			temp = frontTopRight;
 			frontTopRight = frontBottomRight;
@@ -597,6 +618,8 @@ void rotateRightCW() {
 		}
 	}
 void rotateRightCCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		frontTopRight->rotate(CCW, XSIDE, REV);
 		middleTopRight->rotate(CCW, XSIDE, REV);
 		backTopRight->rotate(CCW, XSIDE, REV);
@@ -606,8 +629,8 @@ void rotateRightCCW() {
 		frontBottomRight->rotate(CCW, XSIDE, REV);
 		middleBottomRight->rotate(CCW, XSIDE, REV);
 		backBottomRight->rotate(CCW, XSIDE, REV);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
-
 			temp = frontTopRight;
 			frontTopRight = backTopRight;
 			backTopRight = backBottomRight;
@@ -623,6 +646,9 @@ void rotateRightCCW() {
 
 }
 void rotateTopCW() {
+
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		frontTopLeft->rotate(CW, YSIDE, NAT);
 		frontTopMiddle->rotate(CW, YSIDE, NAT);
 		frontTopRight->rotate(CW, YSIDE, NAT);
@@ -632,8 +658,8 @@ void rotateTopCW() {
 		backTopLeft->rotate(CW, YSIDE, NAT);
 		backTopMiddle->rotate(CW, YSIDE, NAT);
 		backTopRight->rotate(CW, YSIDE, NAT);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
-
 			temp = frontTopLeft;
 			frontTopLeft = frontTopRight;
 			frontTopRight = backTopRight;
@@ -648,6 +674,8 @@ void rotateTopCW() {
 		}
 }
 void rotateTopCCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 	frontTopLeft->rotate(CCW, YSIDE, NAT);
 	frontTopMiddle->rotate(CCW, YSIDE, NAT);
 	frontTopRight->rotate(CCW, YSIDE, NAT);
@@ -657,8 +685,8 @@ void rotateTopCCW() {
 	backTopLeft->rotate(CCW, YSIDE, NAT);
 	backTopMiddle->rotate(CCW, YSIDE, NAT);
 	backTopRight->rotate(CCW, YSIDE, NAT);
+	//only update the cube postions when we have reached the end of a 90 degree rotation
 	if (animation_tic_count == FRAMES) {
-
 		temp = frontTopLeft;
 		frontTopLeft = backTopLeft;
 		backTopLeft = backTopRight;
@@ -673,6 +701,8 @@ void rotateTopCCW() {
 	}
 }
 void rotateBottomCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 	frontTopLeft->rotate(CCW, YSIDE, REV);
 	frontTopMiddle->rotate(CCW, YSIDE, REV);
 	frontTopRight->rotate(CCW, YSIDE, REV);
@@ -682,8 +712,8 @@ void rotateBottomCW() {
 	backTopLeft->rotate(CCW, YSIDE, REV);
 	backTopMiddle->rotate(CCW, YSIDE, REV);
 	backTopRight->rotate(CCW, YSIDE, REV);
+	//only update the cube postions when we have reached the end of a 90 degree rotation
 	if (animation_tic_count == FRAMES) {
-
 		temp = frontTopLeft;
 		frontTopLeft = frontTopRight;
 		frontTopRight = backTopRight;
@@ -698,6 +728,8 @@ void rotateBottomCW() {
 	}
 }
 void rotateBottomCCW() {
+	//this handles the rotation for each portion of the cube
+	// it is run FRAMES times before the sides are updtated
 		frontBottomLeft->rotate(CCW, YSIDE, REV);
 		frontBottomMiddle->rotate(CCW, YSIDE, REV);
 		frontBottomRight->rotate(CCW, YSIDE, REV);
@@ -707,6 +739,7 @@ void rotateBottomCCW() {
 		backBottomLeft->rotate(CCW, YSIDE, REV);
 		backBottomMiddle->rotate(CCW, YSIDE, REV);
 		backBottomRight->rotate(CCW, YSIDE, REV);
+		//only update the cube postions when we have reached the end of a 90 degree rotation
 		if (animation_tic_count == FRAMES) {
 
 			temp = frontBottomLeft;
@@ -746,21 +779,29 @@ std::vector<std::string> rubix_parser(std::string inputs)
 }
 
 void rotation_instructions(std::string rot_instructs) {
+
+		//Map the character of the instuction string to the correct rotate function
+		//R calls rotate right counter clockwise
 		if (rot_instructs == "R") {
 			rotateRightCCW();
 		}
+		//L calls rotate left counter clockwise
 		else if (rot_instructs == "L") {
 			rotateLeftCCW();
 		}
+		//U calls rotate top counter clockwise
 		else if (rot_instructs == "U") {
 			rotateTopCCW();
 		}
+		//D calls rotate bottom counter clockwise
 		else if (rot_instructs == "D") {
 			rotateBottomCCW();
 		}
+		//F calls rotate front counter clockwise
 		else if (rot_instructs == "F") {
 			rotateFrontCCW();
 		}
+		//B calls rotate back counter clockwise
 		else if (rot_instructs == "B") {
 			rotateBackCCW();
 		}
@@ -769,26 +810,31 @@ void rotation_instructions(std::string rot_instructs) {
 
 void myKeyboard(unsigned char key, int x, int y)
 {
-	//preliminary rotations attempt
+	//when e is pressed and we aren't currently running the solution start the solution function
 	if (key == 'e' && solution_boolean==0) {
 		solution_boolean += 1;		
 		rotate_vector = rubix_parser(temporary_string);
-		//std:: thread t1(loop_solution);
 	}
 	
 }
 void rotationKeys(int key, int x, int y) {
+	//when the right key is held down increment the wait time by 2
+	//waiting is used in sleep and slows down the animation
 	if (key == GLUT_KEY_RIGHT) {
 		wait_time = wait_time + 2;
 	}
+	//holding down right decreases the wait time to a minimum of 3
+	//This speeds up the animation
 	else if (key == GLUT_KEY_LEFT) {
 		if (wait_time > 3) {
 			wait_time = wait_time - 2;
 		}
 	}
+	//holding up will rotate the camera
 	else if (key == GLUT_KEY_UP) {
 		glRotatef(-15, 1.0, 1.0, 1.0);
 	}
+	//holding down will rotate the camera in the oposite direction
 	else if (key == GLUT_KEY_DOWN) {
 		glRotatef(15, 1.0, 1.0, 1.0);
 	}
@@ -798,21 +844,29 @@ void rotationKeys(int key, int x, int y) {
 void
 display(void)
 {
+	//handle calculations of a solution
 	if (solution_boolean == 1)
-	{
+	{	//while we haven't reached the end of the string and solution is triggered we run a single calculation per frame
 		if (current_string_index < rotate_vector.size()) {
+			//animation tics up to the number of frames currently 32
 			animation_tic_count += 1;
 			rotation_instructions(rotate_vector[current_string_index]);
+			//when animation_tic_count reaches frames it has completed a 90 degree rotation
 			if (animation_tic_count == FRAMES) {
+				//move to the next rotation value
 				current_string_index += 1;
+				//reset the tic counter
 				animation_tic_count = 0;
 			}
 		}
 		else {
+			//when the entire solution has been done reset the solution boolean and string index
+			//if keyboard based scrambling is implemented this will allow the program to resolve the cube
 			current_string_index = 0;
 			solution_boolean = 0;
 		}
 	}
+	//draw the current boxes into the window
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	c1.drawBox();
 	c2.drawBox();
@@ -855,7 +909,10 @@ display(void)
 
 
 void redisplay() {
+	//this redisplay function calls display
+	//it is triggered whenever the program is idle
 	glutPostRedisplay();
+	//putting a sleep here allows us to slow the animation down
 	Sleep(wait_time);
 
 }
