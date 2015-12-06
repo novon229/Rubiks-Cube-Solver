@@ -242,50 +242,11 @@ cube c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17,
 
 int wait_time;
 int solution_boolean = 0;
-void
-display(void)
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	c1.drawBox();
-	c2.drawBox();
-	c3.drawBox();
-
-	c4.drawBox();
-	c5.drawBox();
-	c6.drawBox();
-
-	c7.drawBox();
-	c8.drawBox();
-	c9.drawBox();
-
-	c10.drawBox();
-	c11.drawBox();
-	c12.drawBox();
-
-	c13.drawBox();
-	c14.drawBox();
-	c15.drawBox();
-
-	c16.drawBox();
-	c17.drawBox();
-	c18.drawBox();
-
-	c19.drawBox();
-	c20.drawBox();
-	c21.drawBox();
-
-	c22.drawBox();
-	c23.drawBox();
-	c24.drawBox();
-
-	c25.drawBox();
-	c26.drawBox();
-	c27.drawBox();
-
-	glutSwapBuffers();
-}
-
+int string_length;
+int animation_tic_count = 0;
+int current_string_index = 0;
+std::string temporary_string = "U9 B9 F9 D9 L9 R9";
+std::vector<std::string> rotate_vector;
 void
 init(void)
 {
@@ -799,23 +760,13 @@ void rotation_instructions(std::string rot_instructs) {
 
 void loop_solution() {
 	//idea is this will be replaced with a call to the solver
-	std::string temporary_string = "U3 B3 F3 B3 D2 D1 F2 L3 R3";
-	std::vector<std::string> rotate_vector = rubix_parser(temporary_string);
-	for (std::vector<std::string>::size_type i = 0; i != rotate_vector.size(); i++) {
-		rotation_instructions(rotate_vector[i]);
-		Sleep(wait_time);
-		//update the display
-		display();
-		//glutPostRedisplay();
-	}
+	
 }
 void myKeyboard(unsigned char key, int x, int y)
 {
 	//preliminary rotations attempt
 	if (key == 'e' && solution_boolean==0) {
-		solution_boolean += 1;
-		loop_solution();
-		
+		solution_boolean += 1;		
 		//std:: thread t1(loop_solution);
 	}
 	
@@ -827,7 +778,9 @@ void rotationKeys(int key, int x, int y) {
 	}
 	else if (key == GLUT_KEY_LEFT) {
 		//rotateLeftCCW();
-		wait_time = wait_time - 10;
+		if (wait_time > 10) {
+			wait_time = wait_time - 10;
+		}
 	}
 	else if (key == GLUT_KEY_UP) {
 		//rotateTopCCW();
@@ -835,12 +788,70 @@ void rotationKeys(int key, int x, int y) {
 	else if (key == GLUT_KEY_DOWN) {
 		glRotatef(15, 1.0, 1.0, 1.0);
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
 }
 
+void
+display(void)
+{
+	if (solution_boolean == 1)
+	{
+		rotate_vector = rubix_parser(temporary_string);
+		if (current_string_index < rotate_vector.size()) {
+			rotation_instructions(rotate_vector[current_string_index]);
+			current_string_index += 1;
+			Sleep(wait_time);
+		}
+		else {
+			current_string_index = 0;
+			solution_boolean = 0;
+		}
+	}
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	c1.drawBox();
+	c2.drawBox();
+	c3.drawBox();
+
+	c4.drawBox();
+	c5.drawBox();
+	c6.drawBox();
+
+	c7.drawBox();
+	c8.drawBox();
+	c9.drawBox();
+
+	c10.drawBox();
+	c11.drawBox();
+	c12.drawBox();
+
+	c13.drawBox();
+	c14.drawBox();
+	c15.drawBox();
+
+	c16.drawBox();
+	c17.drawBox();
+	c18.drawBox();
+
+	c19.drawBox();
+	c20.drawBox();
+	c21.drawBox();
+
+	c22.drawBox();
+	c23.drawBox();
+	c24.drawBox();
+
+	c25.drawBox();
+	c26.drawBox();
+	c27.drawBox();
+
+	glutSwapBuffers();
+}
 
 
+void redisplay() {
+	glutPostRedisplay();
+}
 
 int
 main(int argc, char **argv)
@@ -851,6 +862,7 @@ main(int argc, char **argv)
 	glutDisplayFunc(display);
 	glutSpecialFunc(rotationKeys);
 	glutKeyboardFunc(myKeyboard);
+	glutIdleFunc(redisplay);
 
 	//string temp should be replaced with the data from the cube solver;
 	
