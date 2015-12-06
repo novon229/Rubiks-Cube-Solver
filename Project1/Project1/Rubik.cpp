@@ -56,6 +56,26 @@ public:
 		colours[face][1] = b;
 		colours[face][2] = c;
 	}
+
+
+	//would be good if we can change this i don't know how to work with Pi's list
+//	double getColourRed(int face) {
+//		return colours[face][0];
+//	}
+//	double getColourGreen(int face) {
+//		return colours[face][1];
+//	}
+//	double getColourBlue(int face) {
+//		return colours[face][2];
+//	}
+	
+	double* getColours(int face) {
+		double * arr = new double[3];
+		arr[0] = colours[face][0];
+		arr[1] = colours[face][1];
+		arr[2] = colours[face][2];
+		return arr;
+	}
 	void rotate(bool direction, int face, bool side) {
 		GLfloat store[8][4];
 		if (face == XSIDE) {
@@ -807,13 +827,152 @@ void rotation_instructions(std::string rot_instructs) {
 		}
 		
 }
+int colour_interp(double *current) {
+	/*1.0, 0.0, 0.0 is red
+	0.0, 1.0, 0.0 is green
+	0.0, 0.0, 1.0 is blue
+	1.0, 0.5, 0.0 is orange
+	1.0, 1.0, 1.0 is white
+	1.0, 1.0, 0.0 is yellow*/
+	if (current[0] == 1 && current[1] == 0 && current[2] == 0) {
+		return 1;
+	}
+	else if (current[0] == 0 && current[1] == 1 && current[2] == 0) {
+		return 2;
+	}
+	if (current[0] == 0 && current[1] == 0 && current[2] == 1) {
+		return 3;
+	}
+	else if (current[0] == 1 && current[1] == 0.5 && current[2] == 0) {
+		return 4;
+	}
+	if (current[0] == 1 && current[1] == 1 && current[2] == 1) {
+		return 5;
+	}
+	else if (current[0] == 1 && current[1] == 1 && current[2] == 0) {
+		return 6;
+	}
+	else return 7;
+}
+std::vector<int> cube_state() {
+	std::vector<int> cube_position_colour;
+	int current;
+	//---------------Top face
+
+	//front top row
+	cube_position_colour.push_back(colour_interp(frontTopLeft->getColours(1)));
+	cube_position_colour.push_back(colour_interp(frontTopMiddle->getColours(1)));
+	cube_position_colour.push_back(colour_interp(frontTopRight->getColours(1)));
+	//middle top row
+	cube_position_colour.push_back(colour_interp(middleTopLeft->getColours(1)));
+	cube_position_colour.push_back(colour_interp(middleTopMiddle->getColours(1)));
+	cube_position_colour.push_back(colour_interp(middleTopRight->getColours(1)));
+
+	//back top row
+	cube_position_colour.push_back(colour_interp(backTopLeft->getColours(1)));
+	cube_position_colour.push_back(colour_interp(backTopMiddle->getColours(1)));
+	cube_position_colour.push_back(colour_interp(backTopRight->getColours(1)));
+
+	//------------------front face
+
+	//top front row
+	cube_position_colour.push_back(colour_interp(frontTopLeft->getColours(5)));
+	cube_position_colour.push_back(colour_interp(frontTopMiddle->getColours(5)));
+	cube_position_colour.push_back(colour_interp(frontTopRight->getColours(5)));
+	//middle front row
+	cube_position_colour.push_back(colour_interp(frontMiddleLeft->getColours(5)));
+	cube_position_colour.push_back(colour_interp(frontMiddleMiddle->getColours(5)));
+	cube_position_colour.push_back(colour_interp(frontMiddleRight->getColours(5)));
+
+	//bottom front row
+	cube_position_colour.push_back(colour_interp(frontBottomLeft->getColours(5)));
+	cube_position_colour.push_back(colour_interp(frontBottomMiddle->getColours(5)));
+	cube_position_colour.push_back(colour_interp(frontBottomRight->getColours(5)));
+
+	//--------bottom of the cube
+	//bottom front row
+	cube_position_colour.push_back(colour_interp(frontBottomLeft->getColours(3)));
+	cube_position_colour.push_back(colour_interp(frontBottomMiddle->getColours(3)));
+	cube_position_colour.push_back(colour_interp(frontBottomRight->getColours(3)));
+
+	//bottom middle row
+	cube_position_colour.push_back(colour_interp(middleBottomLeft->getColours(3)));
+	cube_position_colour.push_back(colour_interp(middleBottomMiddle->getColours(3)));
+	cube_position_colour.push_back(colour_interp(middleBottomRight->getColours(3)));
+
+	//bottom front row
+	cube_position_colour.push_back(colour_interp(backBottomLeft->getColours(3)));
+	cube_position_colour.push_back(colour_interp(backBottomMiddle->getColours(3)));
+	cube_position_colour.push_back(colour_interp(backBottomRight->getColours(3)));
+
+	//---------back of the cube
+	//top back row
+	cube_position_colour.push_back(colour_interp(backTopLeft->getColours(4)));
+	cube_position_colour.push_back(colour_interp(backTopMiddle->getColours(4)));
+	cube_position_colour.push_back(colour_interp(backTopRight->getColours(4)));
+
+	//middle back row
+	cube_position_colour.push_back(colour_interp(backMiddleLeft->getColours(4)));
+	cube_position_colour.push_back(colour_interp(backMiddleMiddle->getColours(4)));
+	cube_position_colour.push_back(colour_interp(backMiddleRight->getColours(4)));
+
+	//bottom back row
+	cube_position_colour.push_back(colour_interp(backBottomLeft->getColours(4)));
+	cube_position_colour.push_back(colour_interp(backBottomMiddle->getColours(4)));
+	cube_position_colour.push_back(colour_interp(backBottomRight->getColours(4)));
+
+
+
+
+	//---------right face of the cube
+	//top back row
+	cube_position_colour.push_back(colour_interp(frontTopRight->getColours(2)));
+	cube_position_colour.push_back(colour_interp(middleTopRight->getColours(2)));
+	cube_position_colour.push_back(colour_interp(backTopRight->getColours(2)));
+
+	//middle back row
+	cube_position_colour.push_back(colour_interp(frontMiddleRight->getColours(2)));
+	cube_position_colour.push_back(colour_interp(middleMiddleRight->getColours(2)));
+	cube_position_colour.push_back(colour_interp(backMiddleRight->getColours(2)));
+
+	//bottom back row
+	cube_position_colour.push_back(colour_interp(frontBottomRight->getColours(2)));
+	cube_position_colour.push_back(colour_interp(middleBottomRight->getColours(2)));
+	cube_position_colour.push_back(colour_interp(backBottomRight->getColours(2)));
+
+
+	//---------left face of the cube
+	//top back row
+	cube_position_colour.push_back(colour_interp(frontTopLeft->getColours(0)));
+	cube_position_colour.push_back(colour_interp(middleTopLeft->getColours(0)));
+	cube_position_colour.push_back(colour_interp(backTopLeft->getColours(0)));
+
+	//middle back row
+	cube_position_colour.push_back(colour_interp(frontMiddleLeft->getColours(0)));
+	cube_position_colour.push_back(colour_interp(middleMiddleLeft->getColours(0)));
+	cube_position_colour.push_back(colour_interp(backMiddleLeft->getColours(0)));
+
+	//bottom back row
+	cube_position_colour.push_back(colour_interp(frontBottomLeft->getColours(0)));
+	cube_position_colour.push_back(colour_interp(middleBottomLeft->getColours(0)));
+	cube_position_colour.push_back(colour_interp(backBottomLeft->getColours(0)));
+	//----------------------------------
+	return cube_position_colour;
+
+}
 
 void myKeyboard(unsigned char key, int x, int y)
 {
 	//when e is pressed and we aren't currently running the solution start the solution function
 	if (key == 'e' && solution_boolean==0) {
-		solution_boolean += 1;		
+		std::vector<int> temp = cube_state();
+		for (std::vector<std::string>::size_type i = 0; i != temp.size(); i++) {
+			std::cout << temp[i] << "\n";
+		}
+		std::cout << "---------------------------\n";
+		solution_boolean += 1;
 		rotate_vector = rubix_parser(temporary_string);
+	
 	}
 	
 }
