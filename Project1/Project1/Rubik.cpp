@@ -178,7 +178,8 @@ private:
 	GLfloat v[8][3];  /* Will be filled in with X,Y,Z vertexes. */
 	GLfloat light_diffuse[4] = { 1.0, 1.0, 1.0, 1.0 };  /* Red diffuse light. */
 	GLfloat light_position[4] = { 1.0, 1.0, 1.0, 0.0 };  /* Infinite light location. */
-	float theta = M_PI_2 / 16;
+	//the devision here is equal to frames. Unfortunately it wont let me set it.
+	float theta = M_PI_2 / 32;
 	float xMatrix[2][4][4] = {
 		{ { 1, 0, 0, 0 },
 		{ 0, cos(theta), -sin(theta), 0 },
@@ -247,12 +248,14 @@ int animation_tic_count = 0;
 int current_string_index = 0;
 std::string temporary_string = "U9 B9 F9 D9 L9 R9";
 std::vector<std::string> rotate_vector;
+int FRAMES = 32;
+
+
 void
 init(void)
 {
 	//initilize global
-	wait_time = 500;
-
+	wait_time = 50;
 	//double colours[6][3] = { {0.0, 1.0, 0.0}, {1.0, 1.0, 0.0}, {1.0, 1.0, 1.0},  {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 0.5, 0.0} };
 	c1 = cube(-0.9, -0.32, 0.32, 0.9, 0.9, 0.32);
 	c1.setColours(0.0, 1.0, 0.0, 0);
@@ -418,7 +421,7 @@ init(void)
 
 void rotateFrontCW()
 {
-	for (int i = 0; i < 16; i++) {
+
 		frontTopLeft->rotate(CW, ZSIDE, NAT);
 		frontTopMiddle->rotate(CW, ZSIDE, NAT);
 		frontTopRight->rotate(CW, ZSIDE, NAT);
@@ -428,22 +431,21 @@ void rotateFrontCW()
 		frontBottomLeft->rotate(CW, ZSIDE, NAT);
 		frontBottomMiddle->rotate(CW, ZSIDE, NAT);
 		frontBottomRight->rotate(CW, ZSIDE, NAT);
-	}
-	 
-	temp = frontTopLeft;
-	frontTopLeft = frontBottomLeft;
-	frontBottomLeft = frontBottomRight;
-	frontBottomRight = frontTopRight;
-	frontTopRight = temp;
-
+	
+	if (animation_tic_count == FRAMES) {
+		temp = frontTopLeft;
+		frontTopLeft = frontBottomLeft;
+		frontBottomLeft = frontBottomRight;
+		frontBottomRight = frontTopRight;
+		frontTopRight = temp;
 	temp = frontTopMiddle;
 	frontTopMiddle = frontMiddleLeft;
 	frontMiddleLeft = frontBottomMiddle;
 	frontBottomMiddle = frontMiddleRight;
 	frontMiddleRight = temp;
+	}
 }
 void rotateFrontCCW() {
-	for (int i = 0; i < 16; i++) {
 		frontTopLeft->rotate(CCW, ZSIDE, NAT);
 		frontTopMiddle->rotate(CCW, ZSIDE, NAT);
 		frontTopRight->rotate(CCW, ZSIDE, NAT);
@@ -453,22 +455,22 @@ void rotateFrontCCW() {
 		frontBottomLeft->rotate(CCW, ZSIDE, NAT);
 		frontBottomMiddle->rotate(CCW, ZSIDE, NAT);
 		frontBottomRight->rotate(CCW, ZSIDE, NAT);
-	}
+		if (animation_tic_count == FRAMES) {
+			temp = frontTopLeft;
+			frontTopLeft = frontTopRight;
+			frontTopRight = frontBottomRight;
+			frontBottomRight = frontBottomLeft;
+			frontBottomLeft = temp;
 
-	temp = frontTopLeft;
-	frontTopLeft = frontTopRight;
-	frontTopRight = frontBottomRight;
-	frontBottomRight = frontBottomLeft;
-	frontBottomLeft = temp;
+			temp = frontTopMiddle;
+			frontTopMiddle = frontMiddleRight;
+			frontMiddleRight = frontBottomMiddle;
+			frontBottomMiddle = frontMiddleLeft;
+			frontMiddleLeft = temp;
+		}
 
-	temp = frontTopMiddle;
-	frontTopMiddle = frontMiddleRight;
-	frontMiddleRight = frontBottomMiddle;
-	frontBottomMiddle = frontMiddleLeft;
-	frontMiddleLeft = temp;
 }
 void rotateBackCW() {
-	for (int i = 0; i < 16; i++) {
 		backTopLeft->rotate(CW, ZSIDE, REV);
 		backTopMiddle->rotate(CW, ZSIDE, REV);
 		backTopRight->rotate(CW, ZSIDE, REV);
@@ -478,22 +480,23 @@ void rotateBackCW() {
 		backBottomLeft->rotate(CW, ZSIDE, REV);
 		backBottomMiddle->rotate(CW, ZSIDE, REV);
 		backBottomRight->rotate(CW, ZSIDE, REV);
+		if (animation_tic_count == FRAMES) {
+
+			temp = backTopLeft;
+			backTopLeft = backTopRight;
+			backTopRight = backBottomRight;
+			backBottomRight = backBottomLeft;
+			backBottomLeft = temp;
+
+			temp = backTopMiddle;
+			backTopMiddle = backMiddleRight;
+			backMiddleRight = backBottomMiddle;
+			backBottomMiddle = backMiddleLeft;
+			backMiddleLeft = temp;
+		}
+
 	}
-
-	temp = backTopLeft;
-	backTopLeft = backTopRight;
-	backTopRight = backBottomRight;
-	backBottomRight = backBottomLeft;
-	backBottomLeft = temp;
-
-	temp = backTopMiddle;
-	backTopMiddle = backMiddleRight;
-	backMiddleRight = backBottomMiddle;
-	backBottomMiddle = backMiddleLeft;
-	backMiddleLeft = temp;
-}
 void rotateBackCCW() {
-	for (int i = 0; i < 16; i++) {
 		backTopLeft->rotate(CCW, ZSIDE, REV);
 		backTopMiddle->rotate(CCW, ZSIDE, REV);
 		backTopRight->rotate(CCW, ZSIDE, REV);
@@ -503,22 +506,23 @@ void rotateBackCCW() {
 		backBottomLeft->rotate(CCW, ZSIDE, REV);
 		backBottomMiddle->rotate(CCW, ZSIDE, REV);
 		backBottomRight->rotate(CCW, ZSIDE, REV);
+		if (animation_tic_count == FRAMES) {
+
+			temp = backTopLeft;
+			backTopLeft = backBottomLeft;
+			backBottomLeft = backBottomRight;
+			backBottomRight = backTopRight;
+			backTopRight = temp;
+
+			temp = backTopMiddle;
+			backTopMiddle = backMiddleLeft;
+			backMiddleLeft = backBottomMiddle;
+			backBottomMiddle = backMiddleRight;
+			backMiddleRight = temp;
+		}
+
 	}
-
-	temp = backTopLeft;
-	backTopLeft = backBottomLeft;
-	backBottomLeft = backBottomRight;
-	backBottomRight = backTopRight;
-	backTopRight = temp;
-
-	temp = backTopMiddle;
-	backTopMiddle = backMiddleLeft;
-	backMiddleLeft = backBottomMiddle;
-	backBottomMiddle = backMiddleRight;
-	backMiddleRight = temp;
-}
 void rotateLeftCW() {
-	for (int i = 0; i < 16; i++) {
 		frontTopLeft->rotate(CW, XSIDE, NAT);
 		middleTopLeft->rotate(CW, XSIDE, NAT);
 		backTopLeft->rotate(CW, XSIDE, NAT);
@@ -528,21 +532,23 @@ void rotateLeftCW() {
 		frontBottomLeft->rotate(CW, XSIDE, NAT);
 		middleBottomLeft->rotate(CW, XSIDE, NAT);
 		backBottomLeft->rotate(CW, XSIDE, NAT);
-	}
-	temp = frontTopLeft;
-	frontTopLeft = backTopLeft;
-	backTopLeft = backBottomLeft;
-	backBottomLeft = frontBottomLeft;
-	frontBottomLeft = temp;
+		if (animation_tic_count == FRAMES) {
 
-	temp = middleTopLeft;
-	middleTopLeft = backMiddleLeft;
-	backMiddleLeft = middleBottomLeft;
-	middleBottomLeft = frontMiddleLeft;
-	frontMiddleLeft = temp;
-}
+			temp = frontTopLeft;
+			frontTopLeft = backTopLeft;
+			backTopLeft = backBottomLeft;
+			backBottomLeft = frontBottomLeft;
+			frontBottomLeft = temp;
+
+			temp = middleTopLeft;
+			middleTopLeft = backMiddleLeft;
+			backMiddleLeft = middleBottomLeft;
+			middleBottomLeft = frontMiddleLeft;
+			frontMiddleLeft = temp;
+		}
+
+	}
 void rotateLeftCCW() {
-	for (int i = 0; i < 16; i++) {
 		frontTopLeft->rotate(CCW, XSIDE, NAT);
 		middleTopLeft->rotate(CCW, XSIDE, NAT);
 		backTopLeft->rotate(CCW, XSIDE, NAT);
@@ -552,21 +558,21 @@ void rotateLeftCCW() {
 		frontBottomLeft->rotate(CCW, XSIDE, NAT);
 		middleBottomLeft->rotate(CCW, XSIDE, NAT);
 		backBottomLeft->rotate(CCW, XSIDE, NAT);
-	}
-	temp = frontTopLeft;
-	frontTopLeft = frontBottomLeft;
-	frontBottomLeft = backBottomLeft;
-	backBottomLeft = backTopLeft;
-	backTopLeft = temp;
+		if (animation_tic_count == FRAMES) {
+			temp = frontTopLeft;
+			frontTopLeft = frontBottomLeft;
+			frontBottomLeft = backBottomLeft;
+			backBottomLeft = backTopLeft;
+			backTopLeft = temp;
 
-	temp = middleTopLeft;
-	middleTopLeft = frontMiddleLeft;
-	frontMiddleLeft = middleBottomLeft;
-	middleBottomLeft = backMiddleLeft;
-	backMiddleLeft = temp;
-}
+			temp = middleTopLeft;
+			middleTopLeft = frontMiddleLeft;
+			frontMiddleLeft = middleBottomLeft;
+			middleBottomLeft = backMiddleLeft;
+			backMiddleLeft = temp;
+		}
+	}
 void rotateRightCW() {
-	for (int i = 0; i < 16; i++) {
 		frontTopRight->rotate(CW, XSIDE, REV);
 		middleTopRight->rotate(CW, XSIDE, REV);
 		backTopRight->rotate(CW, XSIDE, REV);
@@ -576,21 +582,21 @@ void rotateRightCW() {
 		frontBottomRight->rotate(CW, XSIDE, REV);
 		middleBottomRight->rotate(CW, XSIDE, REV);
 		backBottomRight->rotate(CW, XSIDE, REV);
-	}
-	temp = frontTopRight;
-	frontTopRight = frontBottomRight;
-	frontBottomRight = backBottomRight;
-	backBottomRight = backTopRight;
-	backTopRight = temp;
+		if (animation_tic_count == FRAMES) {
+			temp = frontTopRight;
+			frontTopRight = frontBottomRight;
+			frontBottomRight = backBottomRight;
+			backBottomRight = backTopRight;
+			backTopRight = temp;
 
-	temp = middleTopRight;
-	middleTopRight = frontMiddleRight;
-	frontMiddleRight = middleBottomRight;
-	middleBottomRight = backMiddleRight;
-	backMiddleRight = temp;
-}
+			temp = middleTopRight;
+			middleTopRight = frontMiddleRight;
+			frontMiddleRight = middleBottomRight;
+			middleBottomRight = backMiddleRight;
+			backMiddleRight = temp;
+		}
+	}
 void rotateRightCCW() {
-	for (int i = 0; i < 16; i++) {
 		frontTopRight->rotate(CCW, XSIDE, REV);
 		middleTopRight->rotate(CCW, XSIDE, REV);
 		backTopRight->rotate(CCW, XSIDE, REV);
@@ -600,21 +606,23 @@ void rotateRightCCW() {
 		frontBottomRight->rotate(CCW, XSIDE, REV);
 		middleBottomRight->rotate(CCW, XSIDE, REV);
 		backBottomRight->rotate(CCW, XSIDE, REV);
-	}
-	temp = frontTopRight;
-	frontTopRight = backTopRight;
-	backTopRight = backBottomRight;
-	backBottomRight = frontBottomRight;
-	frontBottomRight = temp;
+		if (animation_tic_count == FRAMES) {
 
-	temp = middleTopRight;
-	middleTopRight = backMiddleRight;
-	backMiddleRight = middleBottomRight;
-	middleBottomRight = frontMiddleRight;
-	frontMiddleRight = temp;
+			temp = frontTopRight;
+			frontTopRight = backTopRight;
+			backTopRight = backBottomRight;
+			backBottomRight = frontBottomRight;
+			frontBottomRight = temp;
+
+			temp = middleTopRight;
+			middleTopRight = backMiddleRight;
+			backMiddleRight = middleBottomRight;
+			middleBottomRight = frontMiddleRight;
+			frontMiddleRight = temp;
+		}
+
 }
 void rotateTopCW() {
-	for (int i = 0; i < 16; i++) {
 		frontTopLeft->rotate(CW, YSIDE, NAT);
 		frontTopMiddle->rotate(CW, YSIDE, NAT);
 		frontTopRight->rotate(CW, YSIDE, NAT);
@@ -624,72 +632,72 @@ void rotateTopCW() {
 		backTopLeft->rotate(CW, YSIDE, NAT);
 		backTopMiddle->rotate(CW, YSIDE, NAT);
 		backTopRight->rotate(CW, YSIDE, NAT);
-	}
+		if (animation_tic_count == FRAMES) {
 
-	temp = frontTopLeft;
-	frontTopLeft = frontTopRight;
-	frontTopRight = backTopRight;
-	backTopRight = backTopLeft;
-	backTopLeft = temp;
+			temp = frontTopLeft;
+			frontTopLeft = frontTopRight;
+			frontTopRight = backTopRight;
+			backTopRight = backTopLeft;
+			backTopLeft = temp;
 
-	temp = frontTopMiddle;
-	frontTopMiddle = middleTopRight;
-	middleTopRight = backTopMiddle;
-	backTopMiddle = middleTopLeft;
-	middleTopLeft = temp;
+			temp = frontTopMiddle;
+			frontTopMiddle = middleTopRight;
+			middleTopRight = backTopMiddle;
+			backTopMiddle = middleTopLeft;
+			middleTopLeft = temp;
+		}
 }
 void rotateTopCCW() {
-	for (int i = 0; i < 16; i++) {
-		frontTopLeft->rotate(CCW, YSIDE, NAT);
-		frontTopMiddle->rotate(CCW, YSIDE, NAT);
-		frontTopRight->rotate(CCW, YSIDE, NAT);
-		middleTopLeft->rotate(CCW, YSIDE, NAT);
-		middleTopMiddle->rotate(CCW, YSIDE, NAT);
-		middleTopRight->rotate(CCW, YSIDE, NAT);
-		backTopLeft->rotate(CCW, YSIDE, NAT);
-		backTopMiddle->rotate(CCW, YSIDE, NAT);
-		backTopRight->rotate(CCW, YSIDE, NAT);
+	frontTopLeft->rotate(CCW, YSIDE, NAT);
+	frontTopMiddle->rotate(CCW, YSIDE, NAT);
+	frontTopRight->rotate(CCW, YSIDE, NAT);
+	middleTopLeft->rotate(CCW, YSIDE, NAT);
+	middleTopMiddle->rotate(CCW, YSIDE, NAT);
+	middleTopRight->rotate(CCW, YSIDE, NAT);
+	backTopLeft->rotate(CCW, YSIDE, NAT);
+	backTopMiddle->rotate(CCW, YSIDE, NAT);
+	backTopRight->rotate(CCW, YSIDE, NAT);
+	if (animation_tic_count == FRAMES) {
+
+		temp = frontTopLeft;
+		frontTopLeft = backTopLeft;
+		backTopLeft = backTopRight;
+		backTopRight = frontTopRight;
+		frontTopRight = temp;
+
+		temp = frontTopMiddle;
+		frontTopMiddle = middleTopLeft;
+		middleTopLeft = backTopMiddle;
+		backTopMiddle = middleTopRight;
+		middleTopRight = temp;
 	}
-
-	temp = frontTopLeft;
-	frontTopLeft = backTopLeft;
-	backTopLeft = backTopRight;
-	backTopRight = frontTopRight;
-	frontTopRight = temp;
-
-	temp = frontTopMiddle;
-	frontTopMiddle = middleTopLeft;
-	middleTopLeft = backTopMiddle;
-	backTopMiddle = middleTopRight;
-	middleTopRight = temp;
 }
 void rotateBottomCW() {
-	for (int i = 0; i < 16; i++) {
-		frontTopLeft->rotate(CCW, YSIDE, REV);
-		frontTopMiddle->rotate(CCW, YSIDE, REV);
-		frontTopRight->rotate(CCW, YSIDE, REV);
-		middleTopLeft->rotate(CCW, YSIDE, REV);
-		middleTopMiddle->rotate(CCW, YSIDE, REV);
-		middleTopRight->rotate(CCW, YSIDE, REV);
-		backTopLeft->rotate(CCW, YSIDE, REV);
-		backTopMiddle->rotate(CCW, YSIDE, REV);
-		backTopRight->rotate(CCW, YSIDE, REV);
+	frontTopLeft->rotate(CCW, YSIDE, REV);
+	frontTopMiddle->rotate(CCW, YSIDE, REV);
+	frontTopRight->rotate(CCW, YSIDE, REV);
+	middleTopLeft->rotate(CCW, YSIDE, REV);
+	middleTopMiddle->rotate(CCW, YSIDE, REV);
+	middleTopRight->rotate(CCW, YSIDE, REV);
+	backTopLeft->rotate(CCW, YSIDE, REV);
+	backTopMiddle->rotate(CCW, YSIDE, REV);
+	backTopRight->rotate(CCW, YSIDE, REV);
+	if (animation_tic_count == FRAMES) {
+
+		temp = frontTopLeft;
+		frontTopLeft = frontTopRight;
+		frontTopRight = backTopRight;
+		backTopRight = backTopLeft;
+		backTopLeft = temp;
+
+		temp = frontTopMiddle;
+		frontTopMiddle = middleTopRight;
+		middleTopRight = backTopMiddle;
+		backTopMiddle = middleTopLeft;
+		middleTopLeft = temp;
 	}
-
-	temp = frontTopLeft;
-	frontTopLeft = frontTopRight;
-	frontTopRight = backTopRight;
-	backTopRight = backTopLeft;
-	backTopLeft = temp;
-
-	temp = frontTopMiddle;
-	frontTopMiddle = middleTopRight;
-	middleTopRight = backTopMiddle;
-	backTopMiddle = middleTopLeft;
-	middleTopLeft = temp;
 }
 void rotateBottomCCW() {
-	for (int i = 0; i < 16; i++) {
 		frontBottomLeft->rotate(CCW, YSIDE, REV);
 		frontBottomMiddle->rotate(CCW, YSIDE, REV);
 		frontBottomRight->rotate(CCW, YSIDE, REV);
@@ -699,19 +707,20 @@ void rotateBottomCCW() {
 		backBottomLeft->rotate(CCW, YSIDE, REV);
 		backBottomMiddle->rotate(CCW, YSIDE, REV);
 		backBottomRight->rotate(CCW, YSIDE, REV);
-	}
+		if (animation_tic_count == FRAMES) {
 
-	temp = frontBottomLeft;
-	frontBottomLeft = frontBottomRight;
-	frontBottomRight = backBottomRight;
-	backBottomRight = backBottomLeft;
-	backBottomLeft = temp;
+			temp = frontBottomLeft;
+			frontBottomLeft = frontBottomRight;
+			frontBottomRight = backBottomRight;
+			backBottomRight = backBottomLeft;
+			backBottomLeft = temp;
 
-	temp = frontBottomMiddle;
-	frontBottomMiddle = middleBottomRight;
-	middleBottomRight = backBottomMiddle;
-	backBottomMiddle = middleBottomLeft;
-	middleBottomLeft = temp;
+			temp = frontBottomMiddle;
+			frontBottomMiddle = middleBottomRight;
+			middleBottomRight = backBottomMiddle;
+			backBottomMiddle = middleBottomLeft;
+			middleBottomLeft = temp;
+		}
 }
 
 
@@ -758,37 +767,31 @@ void rotation_instructions(std::string rot_instructs) {
 		
 }
 
-void loop_solution() {
-	//idea is this will be replaced with a call to the solver
-	
-}
 void myKeyboard(unsigned char key, int x, int y)
 {
 	//preliminary rotations attempt
 	if (key == 'e' && solution_boolean==0) {
 		solution_boolean += 1;		
+		rotate_vector = rubix_parser(temporary_string);
 		//std:: thread t1(loop_solution);
 	}
 	
 }
 void rotationKeys(int key, int x, int y) {
 	if (key == GLUT_KEY_RIGHT) {
-		//rotateFrontCCW();
-		wait_time = wait_time + 10;
+		wait_time = wait_time + 2;
 	}
 	else if (key == GLUT_KEY_LEFT) {
-		//rotateLeftCCW();
-		if (wait_time > 10) {
-			wait_time = wait_time - 10;
+		if (wait_time > 3) {
+			wait_time = wait_time - 2;
 		}
 	}
 	else if (key == GLUT_KEY_UP) {
-		//rotateTopCCW();
+		glRotatef(-15, 1.0, 1.0, 1.0);
 	}
 	else if (key == GLUT_KEY_DOWN) {
 		glRotatef(15, 1.0, 1.0, 1.0);
 	}
-	//glutPostRedisplay();
 
 }
 
@@ -797,11 +800,13 @@ display(void)
 {
 	if (solution_boolean == 1)
 	{
-		rotate_vector = rubix_parser(temporary_string);
 		if (current_string_index < rotate_vector.size()) {
+			animation_tic_count += 1;
 			rotation_instructions(rotate_vector[current_string_index]);
-			current_string_index += 1;
-			Sleep(wait_time);
+			if (animation_tic_count == FRAMES) {
+				current_string_index += 1;
+				animation_tic_count = 0;
+			}
 		}
 		else {
 			current_string_index = 0;
@@ -851,6 +856,8 @@ display(void)
 
 void redisplay() {
 	glutPostRedisplay();
+	Sleep(wait_time);
+
 }
 
 int
