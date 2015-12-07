@@ -369,7 +369,7 @@ init(void)
 	int valid = 0;
 	while(valid == 0){
 		test_r = test_b = test_g = test_o = test_w = test_y = 0;
-		valid = 0;
+		valid = 1;
 		double * current = new double[3];
 		current=get_colour_from_user_from_char();
 		c1.setColours(current[0], current[1], current[2], 0);
