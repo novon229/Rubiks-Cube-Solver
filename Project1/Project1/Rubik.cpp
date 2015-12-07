@@ -954,27 +954,27 @@ void rotation_instructions(std::string rot_instructs) {
 		//Map the character of the instuction string to the correct rotate function
 		//R calls rotate right counter clockwise
 		if (rot_instructs == "R") {
-			rotateRightCCW();
+			rotateRightCW();
 		}
 		//L calls rotate left counter clockwise
 		else if (rot_instructs == "L") {
-			rotateLeftCCW();
+			rotateLeftCW();
 		}
 		//U calls rotate top counter clockwise
 		else if (rot_instructs == "U") {
-			rotateTopCCW();
+			rotateTopCW();
 		}
 		//D calls rotate bottom counter clockwise
 		else if (rot_instructs == "D") {
-			rotateBottomCCW();
+			rotateBottomCW();
 		}
 		//F calls rotate front counter clockwise
 		else if (rot_instructs == "F") {
-			rotateFrontCCW();
+			rotateFrontCW();
 		}
 		//B calls rotate back counter clockwise
 		else if (rot_instructs == "B") {
-			rotateBackCCW();
+			rotateBackCW();
 		}
 		
 }
@@ -1018,94 +1018,98 @@ int** cube_state() {
 		arr[h] = new int[9];
 	}
 		
-	arr[0][0]= colour_interp(frontTopLeft->getColours(1));
-	arr[0][1] = colour_interp(frontTopMiddle->getColours(1));
-	arr[0][2] = colour_interp(frontTopRight->getColours(1));
+	arr[2][0]= colour_interp(frontTopLeft->getColours(1));
+	arr[2][1] = colour_interp(frontTopMiddle->getColours(1));
+	arr[2][2] = colour_interp(frontTopRight->getColours(1));
 	//middle top row
-	arr[0][3] = colour_interp(middleTopLeft->getColours(1));
-	arr[0][4] = colour_interp(middleTopMiddle->getColours(1));
-	arr[0][5] = colour_interp(middleTopRight->getColours(1));
+	arr[2][3] = colour_interp(middleTopLeft->getColours(1));
+	arr[2][4] = colour_interp(middleTopMiddle->getColours(1));
+	arr[2][5] = colour_interp(middleTopRight->getColours(1));
 
 	//back top row
-	arr[0][6] = colour_interp(backTopLeft->getColours(1));
-	arr[0][7] = colour_interp(backTopMiddle->getColours(1));
-	arr[0][8] = colour_interp(backTopRight->getColours(1));
+	arr[2][6] = colour_interp(backTopLeft->getColours(1));
+	arr[2][7] = colour_interp(backTopMiddle->getColours(1));
+	arr[2][8] = colour_interp(backTopRight->getColours(1));
 
 	
 	//--------bottom of the cube
 	//bottom front row
-	arr[1][0] = colour_interp(frontBottomLeft->getColours(3));
-	arr[1][1] = colour_interp(frontBottomMiddle->getColours(3));
-	arr[1][2] = colour_interp(frontBottomRight->getColours(3));
+	arr[5][0] = colour_interp(frontBottomLeft->getColours(3));
+	arr[5][1] = colour_interp(frontBottomMiddle->getColours(3));
+	arr[5][2] = colour_interp(frontBottomRight->getColours(3));
 
 	//bottom middle row
-	arr[1][3] = colour_interp(middleBottomLeft->getColours(3));
-	arr[1][4] = colour_interp(middleBottomMiddle->getColours(3));
-	arr[1][5] = colour_interp(middleBottomRight->getColours(3));
+	arr[5][3] = colour_interp(middleBottomLeft->getColours(3));
+	arr[5][4] = colour_interp(middleBottomMiddle->getColours(3));
+	arr[5][5] = colour_interp(middleBottomRight->getColours(3));
 
 	//bottom front row
-	arr[1][6] = colour_interp(backBottomLeft->getColours(3));
-	arr[1][7] = colour_interp(backBottomMiddle->getColours(3));
-	arr[1][8] = colour_interp(backBottomRight->getColours(3));
+	arr[5][6] = colour_interp(backBottomLeft->getColours(3));
+	arr[5][7] = colour_interp(backBottomMiddle->getColours(3));
+	arr[5][8] = colour_interp(backBottomRight->getColours(3));
 
 	
 	//------------------front face
 
 	//top front row
-	arr[2][0] = colour_interp(frontTopLeft->getColours(5));
-	arr[2][1] = colour_interp(frontTopMiddle->getColours(5));
-	arr[2][2] = colour_interp(frontTopRight->getColours(5));
+	arr[0][0] = colour_interp(frontTopLeft->getColours(5));
+	arr[0][1] = colour_interp(frontTopMiddle->getColours(5));
+	arr[0][2] = colour_interp(frontTopRight->getColours(5));
 	//middle front row
-	arr[2][3] = colour_interp(frontMiddleLeft->getColours(5));
-	arr[2][4] = colour_interp(frontMiddleMiddle->getColours(5));
-	arr[2][5] = colour_interp(frontMiddleRight->getColours(5));
-
+	arr[0][3] = colour_interp(frontMiddleLeft->getColours(5));
+	arr[0][4] = colour_interp(frontMiddleMiddle->getColours(5));
+	arr[0][5] = colour_interp(frontMiddleRight->getColours(5));
 	//bottom front row
-	arr[2][6] = colour_interp(frontBottomLeft->getColours(5));
-	arr[2][7] = colour_interp(frontBottomMiddle->getColours(5));
-	arr[2][8] = colour_interp(frontBottomRight->getColours(5));
-	arr[3][0] = colour_interp(frontTopRight->getColours(2));
-	arr[3][1] = colour_interp(middleTopRight->getColours(2));
-	arr[3][2] = colour_interp(backTopRight->getColours(2));
+	arr[0][6] = colour_interp(frontBottomLeft->getColours(5));
+	arr[0][7] = colour_interp(frontBottomMiddle->getColours(5));
+	arr[0][8] = colour_interp(frontBottomRight->getColours(5));
+
+	arr[1][0] = colour_interp(frontTopRight->getColours(2));
+	arr[1][1] = colour_interp(middleTopRight->getColours(2));
+	arr[1][2] = colour_interp(backTopRight->getColours(2));
 
 	//middle back row
-	arr[3][3] = colour_interp(frontMiddleRight->getColours(2));
-	arr[3][4] = colour_interp(middleMiddleRight->getColours(2));
-	arr[3][5] = colour_interp(backMiddleRight->getColours(2));
+	arr[1][3] = colour_interp(frontMiddleRight->getColours(2));
+	arr[1][4] = colour_interp(middleMiddleRight->getColours(2));
+	arr[1][5] = colour_interp(backMiddleRight->getColours(2));
 
 	//bottom back row
-	arr[3][6] = colour_interp(frontBottomRight->getColours(2));
-	arr[3][7] = colour_interp(middleBottomRight->getColours(2));
-	arr[3][8] = colour_interp(backBottomRight->getColours(2));
-	arr[4][0] = colour_interp(backTopLeft->getColours(4));
-	arr[4][1] = colour_interp(backTopMiddle->getColours(4));
-	arr[4][2] = colour_interp(backTopRight->getColours(4));
+	arr[1][6] = colour_interp(frontBottomRight->getColours(2));
+	arr[1][7] = colour_interp(middleBottomRight->getColours(2));
+	arr[1][8] = colour_interp(backBottomRight->getColours(2));
+
+	
+	arr[3][0] = colour_interp(backTopLeft->getColours(4));
+	arr[3][1] = colour_interp(backTopMiddle->getColours(4));
+	arr[3][2] = colour_interp(backTopRight->getColours(4));
 
 	//middle back row
-	arr[4][3] = colour_interp(backMiddleLeft->getColours(4));
-	arr[4][4] = colour_interp(backMiddleMiddle->getColours(4));
-	arr[4][5] = colour_interp(backMiddleRight->getColours(4));
+	arr[3][3] = colour_interp(backMiddleLeft->getColours(4));
+	arr[3][4] = colour_interp(backMiddleMiddle->getColours(4));
+	arr[3][5] = colour_interp(backMiddleRight->getColours(4));
 
 	//bottom back row
-	arr[4][6] = colour_interp(backBottomLeft->getColours(4));
-	arr[4][7] = colour_interp(backBottomMiddle->getColours(4));
-	arr[4][8] = colour_interp(backBottomRight->getColours(4));
+	arr[3][6] = colour_interp(backBottomLeft->getColours(4));
+	arr[3][7] = colour_interp(backBottomMiddle->getColours(4));
+	arr[3][8] = colour_interp(backBottomRight->getColours(4));
+
 
 	//---------left face of the cube
 	//top back row
-	arr[5][0] = colour_interp(frontTopLeft->getColours(0));
-	arr[5][1] = colour_interp(middleTopLeft->getColours(0));
-	arr[5][2] = colour_interp(backTopLeft->getColours(0));
+	arr[4][0] = colour_interp(frontTopLeft->getColours(0));
+	arr[4][1] = colour_interp(middleTopLeft->getColours(0));
+	arr[4][2] = colour_interp(backTopLeft->getColours(0));
 
 	//middle back row
-	arr[5][3] = colour_interp(frontMiddleLeft->getColours(0));
-	arr[5][4] = colour_interp(middleMiddleLeft->getColours(0));
-	arr[5][5] = colour_interp(backMiddleLeft->getColours(0));
+	arr[4][3] = colour_interp(frontMiddleLeft->getColours(0));
+	arr[4][4] = colour_interp(middleMiddleLeft->getColours(0));
+	arr[4][5] = colour_interp(backMiddleLeft->getColours(0));
 
 	//bottom back row
-	arr[5][6] = colour_interp(frontBottomLeft->getColours(0));
-	arr[5][7] = colour_interp(middleBottomLeft->getColours(0));
-	arr[5][8] = colour_interp(backBottomLeft->getColours(0));
+	arr[4][6] = colour_interp(frontBottomLeft->getColours(0));
+	arr[4][7] = colour_interp(middleBottomLeft->getColours(0));
+	arr[4][8] = colour_interp(backBottomLeft->getColours(0));
+	
 	//----------------------------------
 	return arr;
 
@@ -1115,10 +1119,28 @@ void myKeyboard(unsigned char key, int x, int y)
 {
 	//when e is pressed and we aren't currently running the solution start the solution function
 	if (key == 'e' && solution_boolean==0) {
-		int** temp = cube_state();
+		int** state = cube_state();
 		std::cout << "---------------------------\n";
+
+		// FRUBLD is the ordering required for our colour mapper
+		int colorMap[6][9];
+		for (int x = 0; x < 6; x++) {
+			for (int y = 0; y < 9; y++) {
+				colorMap[x][y] = state[x][y];
+			}
+		}
+
+
+		ColorSingmaster mapper = ColorSingmaster();
+		string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
+		cout << mapped;
+
+		ThistleSolver solver = ThistleSolver();
+		string soln = solver.getSolutionFor(mapped);
+		cout << soln;
+
 		solution_boolean += 1;
-		rotate_vector = rubix_parser(temporary_string);
+		rotate_vector = rubix_parser(soln);
 	
 	}
 	
@@ -1247,30 +1269,7 @@ bool runTestSuite() {
 }
 
 int main(int argc, char **argv)
-{
-
-	// FRUBLD
-	// This mapping should be a cube that is one off to completion (though, the AI is too stupid to realize that
-	// and will go around in a circle)
-	int colorMap[6][9] = {
-		{ 3, 3, 3, 2, 2, 2, 2, 2, 2 }, // front
-		{ 4, 4, 4, 3, 3, 3, 3, 3, 3 }, // right
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1 }, // up
-		{ 5, 5, 5, 4, 4, 4, 4, 4, 4 }, // back
-		{ 2, 2, 2, 5, 5, 5, 5, 5, 5 }, // left
-		{ 6, 6, 6, 6, 6, 6, 6, 6, 6 } // down
-	};
-	
-
-	ColorSingmaster mapper = ColorSingmaster();
-	string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
-	cout << mapped;
-
-	ThistleSolver solver = ThistleSolver();
-	string soln = solver.getSolutionFor(mapped);
-	cout << soln;
-	
-
+{	
 	// Test bench for unit testing...
 	bool didTestsPass = runTestSuite();
 
@@ -1294,6 +1293,8 @@ int main(int argc, char **argv)
 	//string temp should be replaced with the data from the cube solver;
 	
 	init();
+
+
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
 }
