@@ -5,9 +5,11 @@
 #include <windows.h> // use proper includes for your system
 #define _USE_MATH_DEFINES
 #include <math.h>
+
 #include <gl/Gl.h>
 #include <gl/GLU.h>
 #include <gl/glut.h>
+
 #include <cmath>
 #include <iostream>
 #include <vector>
@@ -244,6 +246,9 @@ int ZSIDE = 2; //front and back
 bool NAT = 0; //top, left, front
 bool REV = 1; //bottom, right, back
 
+bool isSolutionPossible = false;
+bool wasSolutionAttempted = false;
+
 cube * backTopLeft, * backTopMiddle, * backTopRight;
 cube * backMiddleLeft, * backMiddleMiddle, * backMiddleRight;
 cube * backBottomLeft, * backBottomMiddle, * backBottomRight;
@@ -339,8 +344,7 @@ double* get_colour_from_user_from_char() {
 	return current;
 }
 
-void
-init(void)
+void init(void)
 {
 	//initilize global
 	wait_time = 25;
@@ -1132,19 +1136,38 @@ void myKeyboard(unsigned char key, int x, int y)
 
 
 		ColorSingmaster mapper = ColorSingmaster();
-		string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
-		cout << mapped;
+		wasSolutionAttempted = true;
+		if (mapper.isCubeValid(colorMap)) {
+			string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
+			cout << mapped;
 
-		ThistleSolver solver = ThistleSolver();
-		string soln = solver.getSolutionFor(mapped);
-		cout << soln;
+			ThistleSolver solver = ThistleSolver();
+			string soln = solver.getSolutionFor(mapped);
+			cout << soln;
 
-		solution_boolean += 1;
-		rotate_vector = rubix_parser(soln);
-	
+			// Set the global flag letting the application know a solution in progress
+			isSolutionPossible = true;
+			
+			solution_boolean += 1;
+			rotate_vector = rubix_parser(soln);
+		}
+		else {
+			// No solution possible
+			isSolutionPossible = false;
+		}
 	}
 	
 }
+
+void displayText(float x, float y, int r, int g, int b, const string &s) {
+	int j = s.length();
+	glColor3f(r, g, b);
+	glRasterPos2f(x, y);
+	for (int i = 0; i < j; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_8_BY_13, s.at(i));
+	}
+}
+
 void rotationKeys(int key, int x, int y) {
 	//when the right key is held down increment the wait time by 2
 	//waiting is used in sleep and slows down the animation
@@ -1231,6 +1254,14 @@ display(void)
 	c25.drawBox();
 	c26.drawBox();
 	c27.drawBox();
+
+	// Attempt to draw status text
+	if (wasSolutionAttempted) {
+
+	}
+	else {
+		displayText(0, 440 - 10, 122, 122, 122, "Press 'E' to simulate the solution.");
+	}
 
 	glutSwapBuffers();
 }

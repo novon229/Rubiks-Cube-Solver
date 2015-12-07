@@ -12,6 +12,47 @@ using namespace std;
 class ColorSingmaster {
 public:
 
+	// Returns whether or not the cube we have created is valid
+	bool isCubeValid(int colorMap[6][9]) {
+		// http://math.stackexchange.com/questions/127577/how-to-tell-if-a-rubiks-cube-is-solvable
+		// http://www.math.harvard.edu/~jjchen/docs/Group%20Theory%20and%20the%20Rubik's%20Cube.pdf
+		// 2/3 of these cases can actually be caught by checking two other conditions:
+		// 1) Each cube must only have 9 of each colour
+		// 2) The center colour of each cube must be unique and must appear once
+		// We implement this simpler algorithm as a proof of concept.
+
+		int colorCounts[6];
+		int centerColors[6];
+
+		for (int i = 0; i < 6; i++) {
+			colorCounts[i] = 0;
+			centerColors[i] = 1;
+		}
+
+		for (int face = 0; face < 6; face++) {
+			for (int cube = 0; cube < 9; cube++) {
+				int colorIndex = colorMap[face][cube];
+				colorCounts[colorIndex - 1]++;
+
+				// Exceeded the 9 color count rule
+				if (colorCounts[colorIndex - 1] > 9)
+					return false;
+
+				// center cube
+				// 0 1 2
+				// 3 4 5
+				// 6 7 8
+				if (cube == 4) {
+					centerColors[colorIndex - 1]--;
+					if (centerColors[colorIndex - 1] == -1) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	// Singmaster input is based on popular notation; a simple index lookup can be used here.
 	// http://www.cs.columbia.edu/~sedwards/classes/2013/4840/reports/RCS.pdf
 	// Transformation is based on algorithm proposed in the above paper / report; since the format is almost
