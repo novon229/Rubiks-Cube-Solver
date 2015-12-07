@@ -1141,9 +1141,12 @@ void myKeyboard(unsigned char key, int x, int y)
 		// FRUBLD is the ordering required for our colour mapper
 		int colorMap[6][9];
 		for (int x = 0; x < 6; x++) {
+			printf("Face %d: ", x);
 			for (int y = 0; y < 9; y++) {
 				colorMap[x][y] = state[x][y];
+				printf("%d", colorMap[x][y]);
 			}
+			printf("\n");
 		}
 
 
