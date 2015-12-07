@@ -1017,7 +1017,7 @@ int colour_interp(double *current) {
 int** cube_state() {
 	std::vector<int> cube_position_colour;
 	int current;
-	
+	/*
 	
 	//---------------Top face
 	
@@ -1121,7 +1121,7 @@ int** cube_state() {
 	arr[5][6] = colour_interp(backBottomLeft->getColours(3));
 	arr[5][7] = colour_interp(backBottomMiddle->getColours(3));
 	arr[5][8] = colour_interp(backBottomRight->getColours(3));
-
+	*/
 	return arr;
 
 }
