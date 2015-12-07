@@ -276,7 +276,7 @@ int animation_tic_count = 0;
 //this tells the display function what index of the rotate vector it should change 
 int current_string_index = 0;
 //this is a string for testing purposes that shows cube face rotations
-std::string temporary_string = "U5 B5 F5 D5 L5 R5";
+std::string temporary_string = "";
 //this is the vector for rotating the cube based on temporary string which will eventually be the solution
 std::vector<std::string> rotate_vector;
 //this is the number of tics to do one 90 degree rotation. It needs modified in the cube aswell
@@ -861,110 +861,117 @@ int colour_interp(double *current) {
 	}
 	else return 7;
 }
-std::vector<int> cube_state() {
+int** cube_state() {
 	std::vector<int> cube_position_colour;
 	int current;
+	
+	
 	//---------------Top face
-
+	int** arr = 0;
+	arr = new int*[6];
+	for (int h = 0; h < 6; h++)
+	{
+		arr[h] = new int[9];
+	}
+		
 	//front top row
-	cube_position_colour.push_back(colour_interp(frontTopLeft->getColours(1)));
-	cube_position_colour.push_back(colour_interp(frontTopMiddle->getColours(1)));
-	cube_position_colour.push_back(colour_interp(frontTopRight->getColours(1)));
+	arr[0][0]=colour_interp(frontTopLeft->getColours(1));
+	arr[0][1] = colour_interp(frontTopMiddle->getColours(1));
+	arr[0][2] = colour_interp(frontTopRight->getColours(1));
 	//middle top row
-	cube_position_colour.push_back(colour_interp(middleTopLeft->getColours(1)));
-	cube_position_colour.push_back(colour_interp(middleTopMiddle->getColours(1)));
-	cube_position_colour.push_back(colour_interp(middleTopRight->getColours(1)));
+	arr[0][3] = colour_interp(middleTopLeft->getColours(1));
+	arr[0][4] = colour_interp(middleTopMiddle->getColours(1));
+	arr[0][5] = colour_interp(middleTopRight->getColours(1));
 
 	//back top row
-	cube_position_colour.push_back(colour_interp(backTopLeft->getColours(1)));
-	cube_position_colour.push_back(colour_interp(backTopMiddle->getColours(1)));
-	cube_position_colour.push_back(colour_interp(backTopRight->getColours(1)));
+	arr[0][6] = colour_interp(backTopLeft->getColours(1));
+	arr[0][7] = colour_interp(backTopMiddle->getColours(1));
+	arr[0][8] = colour_interp(backTopRight->getColours(1));
 
+	
+	//--------bottom of the cube
+	//bottom front row
+	arr[1][0] = colour_interp(frontBottomLeft->getColours(3));
+	arr[1][1] = colour_interp(frontBottomMiddle->getColours(3));
+	arr[1][2] = colour_interp(frontBottomRight->getColours(3));
+
+	//bottom middle row
+	arr[1][3] = colour_interp(middleBottomLeft->getColours(3));
+	arr[1][4] = colour_interp(middleBottomMiddle->getColours(3));
+	arr[1][5] = colour_interp(middleBottomRight->getColours(3));
+
+	//bottom front row
+	arr[1][6] = colour_interp(backBottomLeft->getColours(3));
+	arr[1][7] = colour_interp(backBottomMiddle->getColours(3));
+	arr[1][8] = colour_interp(backBottomRight->getColours(3));
+
+	
 	//------------------front face
 
 	//top front row
-	cube_position_colour.push_back(colour_interp(frontTopLeft->getColours(5)));
-	cube_position_colour.push_back(colour_interp(frontTopMiddle->getColours(5)));
-	cube_position_colour.push_back(colour_interp(frontTopRight->getColours(5)));
+	arr[2][0] = colour_interp(frontTopLeft->getColours(5));
+	arr[2][1] = colour_interp(frontTopMiddle->getColours(5));
+	arr[2][2] = colour_interp(frontTopRight->getColours(5));
 	//middle front row
-	cube_position_colour.push_back(colour_interp(frontMiddleLeft->getColours(5)));
-	cube_position_colour.push_back(colour_interp(frontMiddleMiddle->getColours(5)));
-	cube_position_colour.push_back(colour_interp(frontMiddleRight->getColours(5)));
+	arr[2][3] = colour_interp(frontMiddleLeft->getColours(5));
+	arr[2][4] = colour_interp(frontMiddleMiddle->getColours(5));
+	arr[2][5] = colour_interp(frontMiddleRight->getColours(5));
 
 	//bottom front row
-	cube_position_colour.push_back(colour_interp(frontBottomLeft->getColours(5)));
-	cube_position_colour.push_back(colour_interp(frontBottomMiddle->getColours(5)));
-	cube_position_colour.push_back(colour_interp(frontBottomRight->getColours(5)));
-
-	//--------bottom of the cube
-	//bottom front row
-	cube_position_colour.push_back(colour_interp(frontBottomLeft->getColours(3)));
-	cube_position_colour.push_back(colour_interp(frontBottomMiddle->getColours(3)));
-	cube_position_colour.push_back(colour_interp(frontBottomRight->getColours(3)));
-
-	//bottom middle row
-	cube_position_colour.push_back(colour_interp(middleBottomLeft->getColours(3)));
-	cube_position_colour.push_back(colour_interp(middleBottomMiddle->getColours(3)));
-	cube_position_colour.push_back(colour_interp(middleBottomRight->getColours(3)));
-
-	//bottom front row
-	cube_position_colour.push_back(colour_interp(backBottomLeft->getColours(3)));
-	cube_position_colour.push_back(colour_interp(backBottomMiddle->getColours(3)));
-	cube_position_colour.push_back(colour_interp(backBottomRight->getColours(3)));
-
-	//---------back of the cube
-	//top back row
-	cube_position_colour.push_back(colour_interp(backTopLeft->getColours(4)));
-	cube_position_colour.push_back(colour_interp(backTopMiddle->getColours(4)));
-	cube_position_colour.push_back(colour_interp(backTopRight->getColours(4)));
-
-	//middle back row
-	cube_position_colour.push_back(colour_interp(backMiddleLeft->getColours(4)));
-	cube_position_colour.push_back(colour_interp(backMiddleMiddle->getColours(4)));
-	cube_position_colour.push_back(colour_interp(backMiddleRight->getColours(4)));
-
-	//bottom back row
-	cube_position_colour.push_back(colour_interp(backBottomLeft->getColours(4)));
-	cube_position_colour.push_back(colour_interp(backBottomMiddle->getColours(4)));
-	cube_position_colour.push_back(colour_interp(backBottomRight->getColours(4)));
-
-
-
+	arr[2][6] = colour_interp(frontBottomLeft->getColours(5));
+	arr[2][7] = colour_interp(frontBottomMiddle->getColours(5));
+	arr[2][8] = colour_interp(frontBottomRight->getColours(5));
 
 	//---------right face of the cube
 	//top back row
-	cube_position_colour.push_back(colour_interp(frontTopRight->getColours(2)));
-	cube_position_colour.push_back(colour_interp(middleTopRight->getColours(2)));
-	cube_position_colour.push_back(colour_interp(backTopRight->getColours(2)));
+	arr[3][0] = colour_interp(frontTopRight->getColours(2));
+	arr[3][1] = colour_interp(middleTopRight->getColours(2));
+	arr[3][2] = colour_interp(backTopRight->getColours(2));
 
 	//middle back row
-	cube_position_colour.push_back(colour_interp(frontMiddleRight->getColours(2)));
-	cube_position_colour.push_back(colour_interp(middleMiddleRight->getColours(2)));
-	cube_position_colour.push_back(colour_interp(backMiddleRight->getColours(2)));
+	arr[3][3] = colour_interp(frontMiddleRight->getColours(2));
+	arr[3][4] = colour_interp(middleMiddleRight->getColours(2));
+	arr[3][5] = colour_interp(backMiddleRight->getColours(2));
 
 	//bottom back row
-	cube_position_colour.push_back(colour_interp(frontBottomRight->getColours(2)));
-	cube_position_colour.push_back(colour_interp(middleBottomRight->getColours(2)));
-	cube_position_colour.push_back(colour_interp(backBottomRight->getColours(2)));
+	arr[3][6] = colour_interp(frontBottomRight->getColours(2));
+	arr[3][7] = colour_interp(middleBottomRight->getColours(2));
+	arr[3][8] = colour_interp(backBottomRight->getColours(2));
 
+	
+	//---------back of the cube
+	//top back row
+	arr[4][0] = colour_interp(backTopLeft->getColours(4));
+	arr[4][1] = colour_interp(backTopMiddle->getColours(4));
+	arr[4][2] = colour_interp(backTopRight->getColours(4));
+
+	//middle back row
+	arr[4][3] = colour_interp(backMiddleLeft->getColours(4));
+	arr[4][4] = colour_interp(backMiddleMiddle->getColours(4));
+	arr[4][5] = colour_interp(backMiddleRight->getColours(4));
+
+	//bottom back row
+	arr[4][6] = colour_interp(backBottomLeft->getColours(4));
+	arr[4][7] = colour_interp(backBottomMiddle->getColours(4));
+	arr[4][8] = colour_interp(backBottomRight->getColours(4));
 
 	//---------left face of the cube
 	//top back row
-	cube_position_colour.push_back(colour_interp(frontTopLeft->getColours(0)));
-	cube_position_colour.push_back(colour_interp(middleTopLeft->getColours(0)));
-	cube_position_colour.push_back(colour_interp(backTopLeft->getColours(0)));
+	arr[5][0] = colour_interp(frontTopLeft->getColours(0));
+	arr[5][1] = colour_interp(middleTopLeft->getColours(0));
+	arr[5][2] = colour_interp(backTopLeft->getColours(0));
 
 	//middle back row
-	cube_position_colour.push_back(colour_interp(frontMiddleLeft->getColours(0)));
-	cube_position_colour.push_back(colour_interp(middleMiddleLeft->getColours(0)));
-	cube_position_colour.push_back(colour_interp(backMiddleLeft->getColours(0)));
+	arr[5][3] = colour_interp(frontMiddleLeft->getColours(0));
+	arr[5][4] = colour_interp(middleMiddleLeft->getColours(0));
+	arr[5][5] = colour_interp(backMiddleLeft->getColours(0));
 
 	//bottom back row
-	cube_position_colour.push_back(colour_interp(frontBottomLeft->getColours(0)));
-	cube_position_colour.push_back(colour_interp(middleBottomLeft->getColours(0)));
-	cube_position_colour.push_back(colour_interp(backBottomLeft->getColours(0)));
+	arr[5][6] = colour_interp(frontBottomLeft->getColours(0));
+	arr[5][7] = colour_interp(middleBottomLeft->getColours(0));
+	arr[5][8] = colour_interp(backBottomLeft->getColours(0));
 	//----------------------------------
-	return cube_position_colour;
+	return arr;
 
 }
 
@@ -972,10 +979,7 @@ void myKeyboard(unsigned char key, int x, int y)
 {
 	//when e is pressed and we aren't currently running the solution start the solution function
 	if (key == 'e' && solution_boolean==0) {
-		std::vector<int> temp = cube_state();
-		for (std::vector<std::string>::size_type i = 0; i != temp.size(); i++) {
-			std::cout << temp[i] << "\n";
-		}
+		int** temp = cube_state();
 		std::cout << "---------------------------\n";
 		solution_boolean += 1;
 		rotate_vector = rubix_parser(temporary_string);
