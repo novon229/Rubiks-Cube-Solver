@@ -67,17 +67,6 @@ public:
 	}
 
 
-	//would be good if we can change this i don't know how to work with Pi's list
-//	double getColourRed(int face) {
-//		return colours[face][0];
-//	}
-//	double getColourGreen(int face) {
-//		return colours[face][1];
-//	}
-//	double getColourBlue(int face) {
-//		return colours[face][2];
-//	}
-	
 	double* getColours(int face) {
 		double * arr = new double[3];
 		arr[0] = colours[face][0];
@@ -283,151 +272,304 @@ std::string temporary_string = "";
 std::vector<std::string> rotate_vector;
 //this is the number of tics to do one 90 degree rotation. It needs modified in the cube aswell
 int FRAMES = 32;
+//used to ensure the user has entered the correct number of each colour
+int test_r, test_g, test_b, test_o, test_w, test_y;
 
+double* get_colour_from_user_from_char() {
+	/*1.0, 0.0, 0.0 is red
+	0.0, 1.0, 0.0 is green
+	0.0, 0.0, 1.0 is blue
+	1.0, 0.5, 0.0 is orange
+	1.0, 1.0, 1.0 is white
+	1.0, 1.0, 0.0 is yellow*/
+	double * current = new double[3];
+	int user_input;
+	int valid=0;
+	while(valid == 0){
+		valid = 1;
+		std::cout << "enter the colour\n";
+		std::cout << "1=red 2=green 3=blue 4=orange 5=white 6=yellow\n";
+		std::cin >> user_input;
+	if (user_input == 1) {
+		current[0] = 1;
+		current[1] = 0;
+		current[2] = 0;
+		test_r++;
+	}
+	else if (user_input == 2){
+
+		current[0] = 0;
+		current[1] = 1;
+		current[2] = 0;
+		test_g++;
+	}
+	else if (user_input == 3) {
+		current[0] = 0;
+		current[1] = 0;
+		current[2] = 1;
+		test_b++;
+
+	}
+	else if (user_input == 4){
+
+		current[0] = 1;
+		current[1] = 0.5;
+		current[2] = 0;
+		test_o++;
+
+	}
+	else if (user_input == 5) {
+		current[0] = 1;
+		current[1] = 1;
+		current[2] = 1;
+		test_w++;
+	}
+	else if (user_input == 6){
+		current[0] = 1;
+		current[1] = 1;
+		current[2] = 0;
+		test_y++;
+
+	}
+	else{
+		std::cout << "invalid input\n";
+		valid = 0;
+		}
+	}
+	return current;
+}
 
 void
 init(void)
 {
 	//initilize global
-	wait_time = 50;
-	//double colours[6][3] = { {0.0, 1.0, 0.0}, {1.0, 1.0, 0.0}, {1.0, 1.0, 1.0},  {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 0.5, 0.0} };
+	wait_time = 25;
+	//initilized the 27 individual cubes.
 	c1 = cube(-0.9, -0.32, 0.32, 0.9, 0.9, 0.32);
-	c1.setColours(0.0, 1.0, 0.0, 0);
-	c1.setColours(1.0, 1.0, 0.0, 1);
-	c1.setColours(1.0, 0.5, 0.0, 5);
-	frontTopLeft = &c1;
-
-	//frontTopLeft.setColours(1.0, 1.0, 1.0, 2);
-	//frontTopLeft.setColours(1.0, 0.0, 0.0, 3);
-	//frontTopLeft.setColours(0.0, 0.0, 1.0, 4);
-
 	c2 = cube(-0.3, 0.3, 0.32, 0.9, 0.9, 0.32);
-	c2.setColours(1.0, 1.0, 0.0, 1);
-	c2.setColours(1.0, 0.5, 0.0, 5);
-	frontTopMiddle = &c2;
-
 	c3 = cube(0.32, 0.9, 0.32, 0.9, 0.9, 0.32);
-	c3.setColours(1.0, 1.0, 0.0, 1);
-	c3.setColours(1.0, 1.0, 1.0, 2);
-	c3.setColours(1.0, 0.5, 0.0, 5);
-	frontTopRight = &c3;	
-
 	c4 = cube(-0.9, -0.32, -0.3, 0.3, 0.9, 0.32);
-	c4.setColours(0.0, 1.0, 0.0, 0);
-	c4.setColours(1.0, 0.5, 0.0, 5);
-	frontMiddleLeft = &c4;	
-
 	c5 = cube(-0.3, 0.3, -0.3, 0.3, 0.9, 0.32);
-	c5.setColours(1.0, 0.5, 0.0, 5);
-	frontMiddleMiddle = &c5;
-
 	c6 = cube(0.32, 0.9, -0.3, 0.3, 0.9, 0.32);
-	c6.setColours(1.0, 1.0, 1.0, 2);
-	c6.setColours(1.0, 0.5, 0.0, 5);
-	frontMiddleRight = &c6;
-
 	c7 = cube(-0.9, -0.32, -0.9, -0.32, 0.9, 0.32);
-	c7.setColours(0.0, 1.0, 0.0, 0);
-	c7.setColours(1.0, 0.0, 0.0, 3);
-	c7.setColours(1.0, 0.5, 0.0, 5);
-	frontBottomLeft = &c7;
-
 	c8 = cube(-0.3, 0.3, -0.9, -0.32, 0.9, 0.32);
-	c8.setColours(1.0, 0.0, 0.0, 3);
-	c8.setColours(1.0, 0.5, 0.0, 5);
-	frontBottomMiddle = &c8;
-
 	c9 = cube(0.32, 0.9, -0.9, -0.32, 0.9, 0.32);
-	c9.setColours(1.0, 1.0, 1.0, 2);
-	c9.setColours(1.0, 0.0, 0.0, 3);
-	c9.setColours(1.0, 0.5, 0.0, 5);
+	c10 = cube(-0.9, -0.32, 0.32, 0.9, 0.3, -0.3);
+	c11 = cube(-0.3, 0.3, 0.32, 0.9, 0.3, -0.3);
+	c12 = cube(0.32, 0.9, 0.32, 0.9, 0.3, -0.3);
+	c13 = cube(-0.9, -0.32, -0.3, 0.3, 0.3, -0.3);
+	c27 = cube(-0.3, 0.3, -0.3, 0.3, 0.3, -0.3);
+	c14 = cube(0.32, 0.9, -0.3, 0.3, 0.3, -0.3);
+	c15 = cube(-0.9, -0.32, -0.9, -0.32, 0.3, -0.3);
+	c16 = cube(-0.3, 0.3, -0.9, -0.32, 0.3, -0.3);
+	c17 = cube(0.32, 0.9, -0.9, -0.32, 0.3, -0.3);
+	c18 = cube(-0.9, -0.32, 0.32, 0.9, -0.32, -0.9);
+	c19 = cube(-0.3, 0.3, 0.32, 0.9, -0.32, -0.9);
+	c20 = cube(0.32, 0.9, 0.32, 0.9, -0.32, -0.9);
+	c21 = cube(-0.9, -0.32, -0.3, 0.3, -0.32, -0.9);
+	c22 = cube(-0.3, 0.3, -0.3, 0.3, -0.32, -0.9);
+	c23 = cube(0.32, 0.9, -0.3, 0.3, -0.32, -0.9);
+	c24 = cube(-0.9, -0.32, -0.9, -0.32, -0.32, -0.9);
+	c25 = cube(-0.3, 0.3, -0.9, -0.32, -0.32, -0.9);
+	c26 = cube(0.32, 0.9, -0.9, -0.32, -0.32, -0.9);
+
+	
+	int valid = 0;
+	while(valid == 0){
+		test_r = test_b = test_g = test_o = test_w = test_y = 0;
+		valid = 1;
+		double * current = new double[3];
+
+
+		//slots 1 through 9 face 1 top of cube
+
+		current = get_colour_from_user_from_char();
+		c18.setColours(current[0], current[1], current[2], 1);
+		current = get_colour_from_user_from_char();
+		c19.setColours(current[0], current[1], current[2], 1);
+		current = get_colour_from_user_from_char();
+		c20.setColours(current[0], current[1], current[2], 1);
+
+		current = get_colour_from_user_from_char();
+		c10.setColours(current[0], current[1], current[2], 1);
+		current = get_colour_from_user_from_char();
+		c11.setColours(current[0], current[1], current[2], 1);
+		current = get_colour_from_user_from_char();
+		c12.setColours(current[0], current[1], current[2], 1);
+
+		current = get_colour_from_user_from_char();
+		c1.setColours(current[0], current[1], current[2], 1);
+		current = get_colour_from_user_from_char();
+		c2.setColours(current[0], current[1], current[2], 1);
+		current = get_colour_from_user_from_char();
+		c3.setColours(current[0], current[1], current[2], 1);
+		
+
+		//slots 1 through 9 face 3 bottom of cube
+
+		current = get_colour_from_user_from_char();
+		c7.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c8.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c9.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c15.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c16.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c17.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c24.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c25.setColours(current[0], current[1], current[2], 3);
+		current = get_colour_from_user_from_char();
+		c26.setColours(current[0], current[1], current[2], 3);
+
+
+		//slots 1 through 9 face 5 front of cube
+
+		current = get_colour_from_user_from_char();
+
+
+		c1.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c2.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c3.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c4.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c5.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c6.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c7.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c8.setColours(current[0], current[1], current[2], 5);
+		current = get_colour_from_user_from_char();
+
+		c9.setColours(current[0], current[1], current[2], 5);
+
+		//slots 1 through 9 face 2 right of cube
+
+		current = get_colour_from_user_from_char();
+		c3.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c12.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c20.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c6.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c14.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c23.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c9.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c17.setColours(current[0], current[1], current[2], 2);
+		current = get_colour_from_user_from_char();
+		c26.setColours(current[0], current[1], current[2], 2);
+	
+
+
+//slots 1 through 9 face 4s back of cube
+	current = get_colour_from_user_from_char();
+	c20.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c19.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c18.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c23.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c22.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c21.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c26.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c25.setColours(current[0], current[1], current[2], 4);
+	current = get_colour_from_user_from_char();
+	c24.setColours(current[0], current[1], current[2], 4);
+
+	//slots 1 through 9 face 0 left of cube
+	current = get_colour_from_user_from_char();
+	c18.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c10.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c1.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c21.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c13.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c4.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c24.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c15.setColours(current[0], current[1], current[2], 0);
+	current = get_colour_from_user_from_char();
+	c7.setColours(current[0], current[1], current[2], 0);
+
+
+
+	if (test_r != 9 || test_b != 9 || test_g != 9 || test_o != 9 || test_y != 9 || test_w != 9) {
+		valid = 0;
+		std::cout << test_r;
+		std::cout << "\n";
+		std::cout << test_b;
+		std::cout << "\n";
+		std::cout << test_g;
+		std::cout << "\n";
+		std::cout << test_o;
+		std::cout << "\n";
+		std::cout << test_y;
+		std::cout << "\n";
+		std::cout << test_w;
+		std::cout << "\n";
+	}
+
+	}
+
+	//assign the 27 cubes to meaningful address locations
+	frontTopLeft = &c1;
+	frontTopMiddle = &c2;
+	frontTopRight = &c3;	
+	frontMiddleLeft = &c4;	
+	frontMiddleMiddle = &c5;
+	frontMiddleRight = &c6;
+	frontBottomLeft = &c7;
+	frontBottomMiddle = &c8;
 	frontBottomRight = &c9;
 
-	c10 = cube(-0.9, -0.32, 0.32, 0.9, 0.3, -0.3);
-	c10.setColours(0.0, 1.0, 0.0, 0);
-	c10.setColours(1.0, 1.0, 0.0, 1);
 	middleTopLeft = &c10;
-
-	c11 = cube(-0.3, 0.3, 0.32, 0.9, 0.3, -0.3);
-	c11.setColours(1.0, 1.0, 0.0, 1);
 	middleTopMiddle = &c11;
-
-	c12 = cube(0.32, 0.9, 0.32, 0.9, 0.3, -0.3);
-	c12.setColours(1.0, 1.0, 0.0, 1);
-	c12.setColours(1.0, 1.0, 1.0, 2);
 	middleTopRight = &c12;
-
-	c13 = cube(-0.9, -0.32, -0.3, 0.3, 0.3, -0.3);
-	c13 .setColours(0.0, 1.0, 0.0, 0);
 	middleMiddleLeft = &c13;
-
-	c27 = cube(-0.3, 0.3, -0.3, 0.3, 0.3, -0.3);
 	middleMiddleMiddle = &c27;
-
-	c14 = cube(0.32, 0.9, -0.3, 0.3, 0.3, -0.3);
-	c14.setColours(1.0, 1.0, 1.0, 2);
 	middleMiddleRight = &c14;
-
-	c15 = cube(-0.9, -0.32, -0.9, -0.32, 0.3, -0.3);
-	c15.setColours(0.0, 1.0, 0.0, 0);
-	c15.setColours(1.0, 0.0, 0.0, 3);
 	middleBottomLeft = &c15;
-
-	c16 = cube(-0.3, 0.3, -0.9, -0.32, 0.3, -0.3);
-	c16.setColours(1.0, 0.0, 0.0, 3);
 	middleBottomMiddle = &c16;
-
-	c17 = cube(0.32, 0.9, -0.9, -0.32, 0.3, -0.3);
-	c17.setColours(1.0, 1.0, 1.0, 2);
-	c17.setColours(1.0, 0.0, 0.0, 3);
 	middleBottomRight = &c17;
 
-	c18 = cube(-0.9, -0.32, 0.32, 0.9, -0.32, -0.9);
-	c18.setColours(0.0, 1.0, 0.0, 0);
-	c18.setColours(1.0, 1.0, 0.0, 1);
-	c18.setColours(0.0, 0.0, 1.0, 4);
 	backTopLeft = &c18;
-
-	c19 = cube(-0.3, 0.3, 0.32, 0.9, -0.32, -0.9);
-	c19.setColours(1.0, 1.0, 0.0, 1);
-	c19.setColours(0.0, 0.0, 1.0, 4);
 	backTopMiddle = &c19;
-
-	c20 = cube(0.32, 0.9, 0.32, 0.9, -0.32, -0.9);
-	c20.setColours(1.0, 1.0, 0.0, 1);
-	c20.setColours(1.0, 1.0, 1.0, 2);
-	c20.setColours(0.0, 0.0, 1.0, 4);
 	backTopRight = &c20;
-
-	c21 = cube(-0.9, -0.32, -0.3, 0.3, -0.32, -0.9);
-	c21.setColours(0.0, 1.0, 0.0, 0);
-	c21.setColours(0.0, 0.0, 1.0, 4);
 	backMiddleLeft = &c21;
-
-	c22 = cube(-0.3, 0.3, -0.3, 0.3, -0.32, -0.9);
-	c22.setColours(0.0, 0.0, 1.0, 4);
 	backMiddleMiddle = &c22;
-
-	c23 = cube(0.32, 0.9, -0.3, 0.3, -0.32, -0.9);
-	c23.setColours(1.0, 1.0, 1.0, 2);
-	c23.setColours(0.0, 0.0, 1.0, 4);
 	backMiddleRight = &c23;
-
-	c24 = cube(-0.9, -0.32, -0.9, -0.32, -0.32, -0.9);
-	c24.setColours(0.0, 1.0, 0.0, 0);
-	c24.setColours(1.0, 0.0, 0.0, 3);
-	c24.setColours(0.0, 0.0, 1.0, 4);
 	backBottomLeft = &c24;
-
-	c25 = cube(-0.3, 0.3, -0.9, -0.32, -0.32, -0.9);
-	c25.setColours(1.0, 0.0, 0.0, 3);
-	c25.setColours(0.0, 0.0, 1.0, 4);
 	backBottomMiddle = &c25;
-
-	c26 = cube(0.32, 0.9, -0.9, -0.32, -0.32, -0.9);
-	c26.setColours(1.0, 1.0, 1.0, 2);
-	c26.setColours(1.0, 0.0, 0.0, 3);
-	c26.setColours(0.0, 0.0, 1.0, 4);
 	backBottomRight = &c26;
 
 	/* Setup the view of the cube. */
@@ -876,8 +1018,7 @@ int** cube_state() {
 		arr[h] = new int[9];
 	}
 		
-	//front top row
-	arr[0][0]=colour_interp(frontTopLeft->getColours(1));
+	arr[0][0]= colour_interp(frontTopLeft->getColours(1));
 	arr[0][1] = colour_interp(frontTopMiddle->getColours(1));
 	arr[0][2] = colour_interp(frontTopRight->getColours(1));
 	//middle top row
@@ -923,9 +1064,6 @@ int** cube_state() {
 	arr[2][6] = colour_interp(frontBottomLeft->getColours(5));
 	arr[2][7] = colour_interp(frontBottomMiddle->getColours(5));
 	arr[2][8] = colour_interp(frontBottomRight->getColours(5));
-
-	//---------right face of the cube
-	//top back row
 	arr[3][0] = colour_interp(frontTopRight->getColours(2));
 	arr[3][1] = colour_interp(middleTopRight->getColours(2));
 	arr[3][2] = colour_interp(backTopRight->getColours(2));
@@ -939,10 +1077,6 @@ int** cube_state() {
 	arr[3][6] = colour_interp(frontBottomRight->getColours(2));
 	arr[3][7] = colour_interp(middleBottomRight->getColours(2));
 	arr[3][8] = colour_interp(backBottomRight->getColours(2));
-
-	
-	//---------back of the cube
-	//top back row
 	arr[4][0] = colour_interp(backTopLeft->getColours(4));
 	arr[4][1] = colour_interp(backTopMiddle->getColours(4));
 	arr[4][2] = colour_interp(backTopRight->getColours(4));

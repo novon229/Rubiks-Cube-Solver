@@ -1,0 +1,64 @@
+Front correct order
+
+RIGHT Face CUBE
+frontTopRight = &c3;
+middleTopRight = &c12;
+backTopRight = &c20;
+
+frontMiddleRight = &c6;
+middleMiddleRight = &c14;
+backMiddleRight = &c23;
+	
+frontBottomRight = &c9;
+middleBottomRight = &c17;
+backBottomRight = &c26;
+	
+Back Face
+backTopRight = &c20;
+backTopMiddle = &c19;
+backTopLeft = &c18;
+	
+backMiddleRight = &c23;
+backMiddleMiddle = &c22;	
+backMiddleLeft = &c21;
+	
+backBottomLeft = &c26;
+backBottomMiddle = &c25;
+backBottomRight = &c24;
+
+Left Face
+backTopLeft = &c18;
+middleTopLeft = &c10;
+frontTopLeft = &c1;
+
+backMiddleLeft = &c21;
+middleMiddleLeft = &c13;
+frontMiddleLeft = &c4;	
+
+backBottomLeft = &c24;
+middleBottomLeft = &c15;
+frontBottomLeft = &c7;
+
+TOP
+backTopLeft = &c18;
+backTopMiddle = &c19;
+backTopRight = &c20;
+middleTopLeft = &c10;
+middleTopMiddle = &c11;
+middleTopRight = &c12;
+frontTopLeft = &c1;
+frontTopMiddle = &c2;
+frontTopRight = &c3;	
+		
+bottom	
+frontBottomLeft = &c7;
+frontBottomMiddle = &c8;
+frontBottomRight = &c9;
+
+middleBottomLeft = &c15;
+middleBottomMiddle = &c16;
+middleBottomRight = &c17;
+
+backBottomLeft = &c24;
+backBottomMiddle = &c25;
+backBottomRight = &c26;
