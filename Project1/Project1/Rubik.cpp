@@ -883,15 +883,15 @@ void rotateTopCCW() {
 void rotateBottomCW() {
 	//this handles the rotation for each portion of the cube
 	// it is run FRAMES times before the sides are updtated
-	frontBottomLeft->rotate(CCW, YSIDE, REV);
-	frontBottomMiddle->rotate(CCW, YSIDE, REV);
-	frontBottomRight->rotate(CCW, YSIDE, REV);
-	middleBottomLeft->rotate(CCW, YSIDE, REV);
-	middleBottomMiddle->rotate(CCW, YSIDE, REV);
-	middleBottomRight->rotate(CCW, YSIDE, REV);
-	backBottomLeft->rotate(CCW, YSIDE, REV);
-	backBottomMiddle->rotate(CCW, YSIDE, REV);
-	backBottomRight->rotate(CCW, YSIDE, REV);
+	frontBottomLeft->rotate(CW, YSIDE, REV);
+	frontBottomMiddle->rotate(CW, YSIDE, REV);
+	frontBottomRight->rotate(CW, YSIDE, REV);
+	middleBottomLeft->rotate(CW, YSIDE, REV);
+	middleBottomMiddle->rotate(CW, YSIDE, REV);
+	middleBottomRight->rotate(CW, YSIDE, REV);
+	backBottomLeft->rotate(CW, YSIDE, REV);
+	backBottomMiddle->rotate(CW, YSIDE, REV);
+	backBottomRight->rotate(CW, YSIDE, REV);
 	//only update the cube postions when we have reached the end of a 90 degree rotation
 	if (animation_tic_count == FRAMES) {
 		temp = frontBottomLeft;
