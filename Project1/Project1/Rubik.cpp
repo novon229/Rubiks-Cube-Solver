@@ -408,7 +408,6 @@ init(void)
 	current = get_colour_from_user_from_char();
 	c18.setColours(current[0], current[1], current[2], 1);
 	current = get_colour_from_user_from_char();
-	current = get_colour_from_user_from_char();
 	c19.setColours(current[0], current[1], current[2], 1);
 	current = get_colour_from_user_from_char();
 	c20.setColours(current[0], current[1], current[2], 1);
@@ -500,7 +499,7 @@ init(void)
 
 	if (test_r != 9 || test_b != 9 || test_g != 9 || test_o != 9 || test_y != 9 || test_w != 9) {
 		valid = 0;
-		std::cout << test_b;
+		std::cout << test_o;
 		std::cout << "\n";
 	}
 
