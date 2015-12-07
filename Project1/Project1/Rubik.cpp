@@ -1,5 +1,6 @@
 //#include "cube_parser.cpp"
 #include "ThistleSolver.h"
+#include "ColorSingmaster.h";
 
 #include <windows.h> // use proper includes for your system
 #define _USE_MATH_DEFINES
@@ -12,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
+#include <stdio.h>
 
 using namespace std;
 #include <string>
@@ -1112,6 +1114,28 @@ bool runTestSuite() {
 
 int main(int argc, char **argv)
 {
+
+	// FRUBLD
+	// This mapping should be a cube that is one off to completion (though, the AI is too stupid to realize that
+	// and will go around in a circle)
+	int colorMap[6][9] = {
+		{ 3, 3, 3, 2, 2, 2, 2, 2, 2 }, // front
+		{ 4, 4, 4, 3, 3, 3, 3, 3, 3 }, // right
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1 }, // up
+		{ 5, 5, 5, 4, 4, 4, 4, 4, 4 }, // back
+		{ 2, 2, 2, 5, 5, 5, 5, 5, 5 }, // left
+		{ 6, 6, 6, 6, 6, 6, 6, 6, 6 } // down
+	};
+	
+
+	ColorSingmaster mapper = ColorSingmaster();
+	string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
+	cout << mapped;
+
+	ThistleSolver solver = ThistleSolver();
+	string soln = solver.getSolutionFor(mapped);
+	cout << soln;
+	
 
 	// Test bench for unit testing...
 	bool didTestsPass = runTestSuite();

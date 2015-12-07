@@ -35,5 +35,8 @@
     <ClInclude Include="Cube.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ColorSingmaster.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

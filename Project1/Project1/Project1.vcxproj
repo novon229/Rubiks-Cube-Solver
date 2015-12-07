@@ -78,6 +78,7 @@
     <None Include="table.dat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColorSingmaster.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="ThistleSolver.h" />
   </ItemGroup>
