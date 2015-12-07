@@ -1021,37 +1021,11 @@ int** cube_state() {
 	{
 		arr[h] = new int[9];
 	}
-		
-	arr[2][0]= colour_interp(frontTopLeft->getColours(1));
-	arr[2][1] = colour_interp(frontTopMiddle->getColours(1));
-	arr[2][2] = colour_interp(frontTopRight->getColours(1));
-	//middle top row
-	arr[2][3] = colour_interp(middleTopLeft->getColours(1));
-	arr[2][4] = colour_interp(middleTopMiddle->getColours(1));
-	arr[2][5] = colour_interp(middleTopRight->getColours(1));
+	
+	
 
-	//back top row
-	arr[2][6] = colour_interp(backTopLeft->getColours(1));
-	arr[2][7] = colour_interp(backTopMiddle->getColours(1));
-	arr[2][8] = colour_interp(backTopRight->getColours(1));
 
 	
-	//--------bottom of the cube
-	//bottom front row
-	arr[5][0] = colour_interp(frontBottomLeft->getColours(3));
-	arr[5][1] = colour_interp(frontBottomMiddle->getColours(3));
-	arr[5][2] = colour_interp(frontBottomRight->getColours(3));
-
-	//bottom middle row
-	arr[5][3] = colour_interp(middleBottomLeft->getColours(3));
-	arr[5][4] = colour_interp(middleBottomMiddle->getColours(3));
-	arr[5][5] = colour_interp(middleBottomRight->getColours(3));
-
-	//bottom front row
-	arr[5][6] = colour_interp(backBottomLeft->getColours(3));
-	arr[5][7] = colour_interp(backBottomMiddle->getColours(3));
-	arr[5][8] = colour_interp(backBottomRight->getColours(3));
-
 	
 	//------------------front face
 
@@ -1068,6 +1042,8 @@ int** cube_state() {
 	arr[0][7] = colour_interp(frontBottomMiddle->getColours(5));
 	arr[0][8] = colour_interp(frontBottomRight->getColours(5));
 
+
+	//------ right face
 	arr[1][0] = colour_interp(frontTopRight->getColours(2));
 	arr[1][1] = colour_interp(middleTopRight->getColours(2));
 	arr[1][2] = colour_interp(backTopRight->getColours(2));
@@ -1083,6 +1059,23 @@ int** cube_state() {
 	arr[1][8] = colour_interp(backBottomRight->getColours(2));
 
 	
+	//top of cube
+	//---------------------------
+	arr[2][0] = colour_interp(frontTopLeft->getColours(1));
+	arr[2][1] = colour_interp(frontTopMiddle->getColours(1));
+	arr[2][2] = colour_interp(frontTopRight->getColours(1));
+	//middle top row
+	arr[2][3] = colour_interp(middleTopLeft->getColours(1));
+	arr[2][4] = colour_interp(middleTopMiddle->getColours(1));
+	arr[2][5] = colour_interp(middleTopRight->getColours(1));
+
+	//back top row
+	arr[2][6] = colour_interp(backTopLeft->getColours(1));
+	arr[2][7] = colour_interp(backTopMiddle->getColours(1));
+	arr[2][8] = colour_interp(backTopRight->getColours(1));
+
+
+	//---back face
 	arr[3][0] = colour_interp(backTopLeft->getColours(4));
 	arr[3][1] = colour_interp(backTopMiddle->getColours(4));
 	arr[3][2] = colour_interp(backTopRight->getColours(4));
@@ -1115,6 +1108,25 @@ int** cube_state() {
 	arr[4][8] = colour_interp(backBottomLeft->getColours(0));
 	
 	//----------------------------------
+
+
+	//--------bottom of the cube
+
+	//bottom front row
+	arr[5][0] = colour_interp(frontBottomLeft->getColours(3));
+	arr[5][1] = colour_interp(frontBottomMiddle->getColours(3));
+	arr[5][2] = colour_interp(frontBottomRight->getColours(3));
+
+	//bottom middle row
+	arr[5][3] = colour_interp(middleBottomLeft->getColours(3));
+	arr[5][4] = colour_interp(middleBottomMiddle->getColours(3));
+	arr[5][5] = colour_interp(middleBottomRight->getColours(3));
+
+	//bottom front row
+	arr[5][6] = colour_interp(backBottomLeft->getColours(3));
+	arr[5][7] = colour_interp(backBottomMiddle->getColours(3));
+	arr[5][8] = colour_interp(backBottomRight->getColours(3));
+
 	return arr;
 
 }
