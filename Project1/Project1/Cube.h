@@ -317,49 +317,6 @@ private:
 
 	}
 
-	int getNameIndex(string name) {
-		string vals[] = {
-			"UF", "DF", "UB", "DB", "UR", "DR", "UL", "DL", "FR", "FL", "BR", "BL",
-			"UFR", "UBL", "DFL", "DBR", "DLB", "DRF", "URB", "ULF"
-		};
-
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < name.length(); j++) {
-				if (vals[i].find(name.at(j)) == string::npos)
-					break;
-				if (j + 1 == name.length()) {
-					return i;
-				}
-			}
-		}
-
-		// Give up... failure
-		return -1;
-
-	}
-
-	string getName(string name) {
-		string vals[] = {
-			"UF", "DF", "UB", "DB", "UR", "DR", "UL", "DL", "FR", "FL", "BR", "BL",
-			"UFR", "UBL", "DFL", "DBR", "DLB", "DRF", "URB", "ULF"
-		};
-
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < name.length(); j++) {
-				if (vals[i].find(name.at(j)) == string::npos)
-					break;
-				if (j + 1 == name.length()) {
-					return vals[i];
-				}
-			}
-		}
-
-		// Give up... failure
-		return "";
-
-	}
-
-
 	int orientCube(int index, string name) {
 		// corners have 3 possible orientations, egeds only 2.
 		int modulu = index > 11 ? 3 : 2;
