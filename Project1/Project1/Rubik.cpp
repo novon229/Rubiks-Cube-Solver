@@ -260,7 +260,7 @@ cube * frontMiddleLeft, * frontMiddleMiddle, * frontMiddleRight;
 cube * frontBottomLeft, * frontBottomMiddle, * frontBottomRight;
 
 cube * temp;
-
+int** arr = 0;
 cube c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27;
 
 int wait_time;
@@ -280,7 +280,7 @@ int FRAMES = 32;
 //used to ensure the user has entered the correct number of each colour
 int test_r, test_g, test_b, test_o, test_w, test_y;
 
-double* get_colour_from_user_from_char() {
+double* get_colour_from_user_from_char(int face, int segment) {
 	/*1.0, 0.0, 0.0 is red
 	0.0, 1.0, 0.0 is green
 	0.0, 0.0, 1.0 is blue
@@ -341,6 +341,8 @@ double* get_colour_from_user_from_char() {
 		valid = 0;
 		}
 	}
+
+	arr[face][segment] = user_input;
 	return current;
 }
 
@@ -348,6 +350,13 @@ void init(void)
 {
 	//initilize global
 	wait_time = 25;
+
+	arr = new int*[6];
+	for (int h = 0; h < 6; h++)
+	{
+		arr[h] = new int[9];
+	}
+
 	//initilized the 27 individual cubes.
 	c1 = cube(-0.9f, -0.32f, 0.32f, 0.9f, 0.9f, 0.32f);
 	c2 = cube(-0.3f, 0.3f, 0.32f, 0.9f, 0.9f, 0.32f);
@@ -384,82 +393,78 @@ void init(void)
 		valid = 1;
 		double * current = new double[3];
 
-
-		
-
 		//slots 1 through 9 face 5 front of cube
 
-		current = get_colour_from_user_from_char();
-
-
+		current = get_colour_from_user_from_char(0,0);
 		c1.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
 
+
+		current = get_colour_from_user_from_char(0, 1);
 		c2.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+		
+		current = get_colour_from_user_from_char(0, 2);
 		c3.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+		
+		current = get_colour_from_user_from_char(0, 3);
 		c4.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+		
+		current = get_colour_from_user_from_char(0, 4);
 		c5.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+		
+		current = get_colour_from_user_from_char(0, 5);
 		c6.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+		
+		current = get_colour_from_user_from_char(0, 6);
 		c7.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+		
+		current = get_colour_from_user_from_char(0, 7);
 		c8.setColours(current[0], current[1], current[2], 5);
-		current = get_colour_from_user_from_char();
-
+	
+		current = get_colour_from_user_from_char(0, 8);
 		c9.setColours(current[0], current[1], current[2], 5);
 
 		//slots 1 through 9 face 2 right of cube
 
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 0);
 		c3.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 1);
 		c12.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 2);
 		c20.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 3);
 		c6.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 4);
 		c14.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 5);
 		c23.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 6);
 		c9.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 7);
 		c17.setColours(current[0], current[1], current[2], 2);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(1, 8);
 		c26.setColours(current[0], current[1], current[2], 2);
 	
 		// slots 1 through 9 face 1 top of cube
 
-			current = get_colour_from_user_from_char();
+			current = get_colour_from_user_from_char(2,0);
 		c18.setColours(current[0], current[1], current[2], 1);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 1);
 		c19.setColours(current[0], current[1], current[2], 1);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 2);
 		c20.setColours(current[0], current[1], current[2], 1);
 
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 3);
 		c10.setColours(current[0], current[1], current[2], 1);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 4);
 		c11.setColours(current[0], current[1], current[2], 1);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 5);
 		c12.setColours(current[0], current[1], current[2], 1);
 
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 6);
 		c1.setColours(current[0], current[1], current[2], 1);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 7);
 		c2.setColours(current[0], current[1], current[2], 1);
-		current = get_colour_from_user_from_char();
+		current = get_colour_from_user_from_char(2, 8);
 		c3.setColours(current[0], current[1], current[2], 1);
 
 
@@ -467,64 +472,64 @@ void init(void)
 
 
 //slots 1 through 9 face 4s back of cube
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 0);
 	c20.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 1);
 	c19.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 2);
 	c18.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 3);
 	c23.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 4);
 	c22.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 5);
 	c21.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 6);
 	c26.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 7);
 	c25.setColours(current[0], current[1], current[2], 4);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(3, 8);
 	c24.setColours(current[0], current[1], current[2], 4);
 
 	//slots 1 through 9 face 0 left of cube
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4,0);
 	c18.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 1);
 	c10.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 2);
 	c1.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 3);
 	c21.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 4);
 	c13.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 5);
 	c4.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 6);
 	c24.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 7);
 	c15.setColours(current[0], current[1], current[2], 0);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(4, 8);
 	c7.setColours(current[0], current[1], current[2], 0);
 
 	//slots 1 through 9 face 3 bottom of cube
 
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 0);
 	c7.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 1);
 	c8.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 2);
 	c9.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 3);
 	c15.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 4);
 	c16.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 5);
 	c17.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 6);
 	c24.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 7);
 	c25.setColours(current[0], current[1], current[2], 3);
-	current = get_colour_from_user_from_char();
+	current = get_colour_from_user_from_char(5, 8);
 	c26.setColours(current[0], current[1], current[2], 3);
 
 	if (test_r != 9 || test_b != 9 || test_g != 9 || test_o != 9 || test_y != 9 || test_w != 9) {
@@ -1015,18 +1020,8 @@ int** cube_state() {
 	
 	
 	//---------------Top face
-	int** arr = 0;
-	arr = new int*[6];
-	for (int h = 0; h < 6; h++)
-	{
-		arr[h] = new int[9];
-	}
-	
 	
 
-
-	
-	
 	//------------------front face
 
 	//top front row
@@ -1141,12 +1136,9 @@ void myKeyboard(unsigned char key, int x, int y)
 		// FRUBLD is the ordering required for our colour mapper
 		int colorMap[6][9];
 		for (int x = 0; x < 6; x++) {
-			printf("Face %d: ", x);
 			for (int y = 0; y < 9; y++) {
 				colorMap[x][y] = state[x][y];
-				printf("%d", colorMap[x][y]);
 			}
-			printf("\n");
 		}
 
 
