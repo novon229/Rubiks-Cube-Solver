@@ -1,3 +1,5 @@
+//#include "cube_parser.cpp"
+#include "ThistleSolver.h"
 
 #include <windows.h> // use proper includes for your system
 #define _USE_MATH_DEFINES
@@ -10,7 +12,12 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
-//#include "cube_parser.cpp"
+
+using namespace std;
+#include <string>
+
+
+
 class cube {
 public:
 	double colours[6][3] = { { 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
@@ -1076,9 +1083,44 @@ void redisplay() {
 
 }
 
-int
-main(int argc, char **argv)
+bool runTestSuite() {
+
+	string testCases[] = {
+		"UR UB UL UF DF DR DB DL FR FL BR BL URB UBL ULF UFR DRF DFL DLB DBR"
+	};
+
+	string testCaseSolutions[] = {
+		"U1 U2" // This maps to the first
+	};
+
+	int i = 0;
+	for (auto testCase : testCases) {
+		ThistleSolver solver = ThistleSolver();
+		string solution = solver.getSolutionFor(testCase);
+		if (solution != testCaseSolutions[i]) {
+			return false;
+		}
+		i++;
+	}
+
+	return true;
+}
+
+int main(int argc, char **argv)
 {
+
+	// Test bench for unit testing...
+	bool didTestsPass = runTestSuite();
+
+	if (didTestsPass) {
+		cout << "All tests passed. Changeset OK.\n";
+	}
+	else {
+		cout << "A test failure occured. Change not OK.\n";
+		return -1;
+	}
+
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("Rubik's Cube");
