@@ -62,6 +62,9 @@ public:
 			int CENTER = 4;
 
 			// up, down, left, right, front, back
+			// The input order of the faces, this is interchangable but the incoming parameters
+			// everywhere need to be changed. It's best to leave this as is, even if it
+			// generates a slight amount of garbage (it's stack allocated, so allocation is cheap)
 			string sideMap = "FRUBLD";
 		
 			for (int i = 0; i < 6; i++) {
@@ -71,6 +74,7 @@ public:
 		}
 	}
 
+	// Grab the cubie fully qualified name
 	string colorsToCubie(int one, int two, int three, int sides[6][9]) {
 		string str = "";
 		str += getSideNameByCenterColor(one, sides);
@@ -82,16 +86,14 @@ public:
 	}
 
 	// Singmaster input is based on popular notation; a simple index lookup can be used here.
-	// http://www.cs.columbia.edu/~sedwards/classes/2013/4840/reports/RCS.pdf
-	// Transformation is based on algorithm proposed in the above paper / report; since the format is almost
-	// linearly mapped there are
-
+	// We just map each cube to the side indice according to the "solved cube" format in singmaster.
+	// See: http://np6.nfshost.com/puzzles/333/blindfold/part1/
 	string getSingmasterStringFromColorMap(int colorMap[6][9]) {
 		
 		// 20 data points
 		string data[20];
 		
-		// FRUBLD
+		// FRUBLD order
 		int* front = colorMap[0];
 		int* right = colorMap[1];
 		int* up = colorMap[2];

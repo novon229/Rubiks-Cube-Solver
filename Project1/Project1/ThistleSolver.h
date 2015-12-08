@@ -54,6 +54,10 @@ public:
 
 		// Create memory slots
 		move = new int[52]; // God's Number is technically 20 but we are far from supreme.
+		// See: http://www.cube20.org/
+		// "God's Number is 26 in the quarter turn metric!" as solved by a super computer
+		// We'll just have to settle for 52 ;)
+
 		moveamount = new int[52];
 		string moveStr = "";
 
