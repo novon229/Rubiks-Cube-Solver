@@ -3,6 +3,7 @@
 * Vaughan Hilts: <HILT2740@mylaurier.ca>
 * CP 411 - Graphics Programming
 * ID: 120892740
+* Some work based on Jaap and Dr. Kociemba (annotated as such where it was taken from)
 */
 //
 
@@ -315,29 +316,6 @@ private:
 			}
 		}
 
-	}
-
-	int orientCube(int index, string name) {
-		// corners have 3 possible orientations, egeds only 2.
-		int modulu = index > 11 ? 3 : 2;
-
-		int last = 0; //the last facelet index that was used to update this cubie's orientation.
-		int orient = 0;
-		for (int idx = 0; idx < modulu; idx++) {
-			string face = name.at(idx) + "";
-			/*
-			* When coming to determine a cubie's orientation, we look at its facelets in the order given
-			* by its location name. For example, if the UFL cubie is found at the UFR location, we will call it ULF.
-			* We now look at the "highest rank" representative of the cubie. The ranking order is RLFBUD. So in our
-			* example the highest rank of ULF is U. The orientation will be the index of U in the string "ULF", which is 0.
-			*/
-			int i = string("RLFBUD").find(face);
-			if (i > last) {
-				last = i;
-				orient = idx;
-			}
-		}
-		return orient;
 	}
 
 };
