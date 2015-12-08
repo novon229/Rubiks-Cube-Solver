@@ -1144,7 +1144,7 @@ void myKeyboard(unsigned char key, int x, int y)
 
 		ColorSingmaster mapper = ColorSingmaster();
 		wasSolutionAttempted = true;
-		if (true) {
+		if (mapper.isCubeValid(colorMap)) {
 			string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
 			cout << mapped;
 
@@ -1161,6 +1161,7 @@ void myKeyboard(unsigned char key, int x, int y)
 		else {
 			// No solution possible
 			isSolutionPossible = false;
+			printf("No solution could be found. Cube was found to be invalid.\n");
 		}
 	}
 	
