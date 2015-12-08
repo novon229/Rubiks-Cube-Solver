@@ -278,7 +278,6 @@ std::vector<std::string> rotate_vector;
 //this is the number of tics to do one 90 degree rotation. It needs modified in the cube aswell
 int FRAMES = 32;
 //used to ensure the user has entered the correct number of each colour
-int test_r, test_g, test_b, test_o, test_w, test_y;
 
 double* get_colour_from_user_from_char(int face, int segment) {
 	/*1.0, 0.0, 0.0 is red
@@ -292,27 +291,27 @@ double* get_colour_from_user_from_char(int face, int segment) {
 	int valid=0;
 	while(valid == 0){
 		valid = 1;
-		std::cout << "enter the colour\n";
+		std::cout << "enter the colour for face:"<<face<<" section:" << segment<<"\n";
+
 		std::cout << "1=red 2=green 3=blue 4=orange 5=white 6=yellow\n";
 		std::cin >> user_input;
 	if (user_input == 1) {
 		current[0] = 1;
 		current[1] = 0;
 		current[2] = 0;
-		test_r++;
+
 	}
 	else if (user_input == 2){
 
 		current[0] = 0;
 		current[1] = 1;
 		current[2] = 0;
-		test_g++;
+
 	}
 	else if (user_input == 3) {
 		current[0] = 0;
 		current[1] = 0;
 		current[2] = 1;
-		test_b++;
 
 	}
 	else if (user_input == 4){
@@ -320,24 +319,27 @@ double* get_colour_from_user_from_char(int face, int segment) {
 		current[0] = 1;
 		current[1] = 0.5;
 		current[2] = 0;
-		test_o++;
+
 
 	}
 	else if (user_input == 5) {
 		current[0] = 1;
 		current[1] = 1;
 		current[2] = 1;
-		test_w++;
+
 	}
 	else if (user_input == 6){
 		current[0] = 1;
 		current[1] = 1;
 		current[2] = 0;
-		test_y++;
 
 	}
 	else{
 		std::cout << "invalid input\n";
+		std::cin.clear();
+		std::string line;
+		//flush stupid input
+		while (std::getline(std::cin, line));
 		valid = 0;
 		}
 	}
@@ -389,7 +391,7 @@ void init(void)
 	
 	int valid = 0;
 	while(valid == 0){
-		test_r = test_b = test_g = test_o = test_w = test_y = 0;
+		
 		valid = 1;
 		double * current = new double[3];
 
@@ -531,22 +533,6 @@ void init(void)
 	c25.setColours(current[0], current[1], current[2], 3);
 	current = get_colour_from_user_from_char(5, 8);
 	c26.setColours(current[0], current[1], current[2], 3);
-
-	if (test_r != 9 || test_b != 9 || test_g != 9 || test_o != 9 || test_y != 9 || test_w != 9) {
-		valid = 0;
-		std::cout << test_r;
-		std::cout << "\n";
-		std::cout << test_b;
-		std::cout << "\n";
-		std::cout << test_g;
-		std::cout << "\n";
-		std::cout << test_o;
-		std::cout << "\n";
-		std::cout << test_y;
-		std::cout << "\n";
-		std::cout << test_w;
-		std::cout << "\n";
-	}
 
 	}
 
