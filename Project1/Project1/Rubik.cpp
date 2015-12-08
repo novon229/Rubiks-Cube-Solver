@@ -339,7 +339,10 @@ double* get_colour_from_user_from_char(int face, int segment) {
 		std::cin.clear();
 		std::string line;
 		//flush stupid input
-		while (std::getline(std::cin, line));
+		char character;
+		// flush stupid inputs
+		while ((character = std::cin.get()) != '\n');
+
 		valid = 0;
 		}
 	}
