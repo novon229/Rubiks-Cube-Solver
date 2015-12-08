@@ -895,16 +895,16 @@ void rotateBottomCW() {
 	//only update the cube postions when we have reached the end of a 90 degree rotation
 	if (animation_tic_count == FRAMES) {
 		temp = frontBottomLeft;
-		frontBottomLeft = frontBottomRight;
-		frontBottomRight = backBottomRight;
-		backBottomRight = backBottomLeft;
-		backBottomLeft = temp;
+		frontBottomLeft = backBottomLeft;
+		backBottomLeft = backBottomRight;
+		backBottomRight = frontBottomRight;
+		frontBottomRight = temp;
 
 		temp = frontBottomMiddle;
-		frontBottomMiddle = middleBottomRight;
-		middleBottomRight = backBottomMiddle;
-		backBottomMiddle = middleBottomLeft;
-		middleBottomLeft = temp;
+		frontBottomMiddle = middleBottomLeft;
+		middleBottomLeft = backBottomMiddle;
+		backBottomMiddle = middleBottomRight;
+		middleBottomRight = temp;
 	}
 }
 void rotateBottomCCW() {
