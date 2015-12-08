@@ -100,12 +100,12 @@ public:
 			int value = table_grab[index];
 
 
-			printf("Position: %d: |  Value: %d\n", index, value);
+			// printf("Position: %d: |  Value: %d\n", index, value);
 
 			// The table contains information for each cube configuration about how to solve it
 			int neededMoves = value - 1;
 			if (neededMoves > movesLeft) {
-				printf("Short circuitng...\n");
+				// printf("Short circuitng...\n");
 				return true;
 			}
 		}
@@ -133,7 +133,7 @@ public:
 			if (i - lastMoveMade && (i - lastMoveMade + 1 || i | 1)) {
 
 				move[movesCompleted] = i;
-				printf("Move: %d\n", i);
+				// printf("Move: %d\n", i);
 
 				for (int j = 0; ++j<4;) {
 					//do move and remember it

@@ -13,27 +13,6 @@ using namespace std;
 class ColorSingmaster {
 public:
 
-	int UF = 0;
-	int UR = 1;
-	int UB = 2;
-	int UL = 3;
-	int DF = 4;
-	int DR = 5;
-	int DB = 6;
-	int DL = 7;
-	int FR = 8;
-	int FL = 9;
-	int BR = 10;
-	int BL = 11;
-
-	int UFR = 12;
-	int URB = 13;
-	int UBL = 14;
-	int ULF = 15;
-	int DRF = 16;
-	int DFL = 17;
-	int DLB = 18;
-	int DBR = 19;
 
 	// Returns whether or not the cube we have created is valid
 	bool isCubeValid(int colorMap[6][9]) {
@@ -157,59 +136,28 @@ public:
 
 private:
 	
-	// Lookups provided by the above paper / report; explanation not provided so one will be provided here to illustrate understanding
-	// of these tables (they are not unique and cannot be, therefore they have been copied as is as they are about as semantic as you
-	// can get)
+	// The singmaster order of a "solved" cube.
+	int UF = 0;
+	int UR = 1;
+	int UB = 2;
+	int UL = 3;
+	int DF = 4;
+	int DR = 5;
+	int DB = 6;
+	int DL = 7;
+	int FR = 8;
+	int FL = 9;
+	int BR = 10;
+	int BL = 11;
 
-	// The Singmaster / Thistle notation indicates the cubes edges and sides by their location relative to a face (hence, FRUBLD).
-	
-	// This map essentially allows us to map a face letter to the cube of a certain center colour. See the first upper loop.
-	// We need this information to be able to tell where we are overall in the faces.
-	const char CENTER_COLOR_POSITION[6] = { 'F', 'R', 'U', 'B', 'L', 'D' };
-	
-	// These tables indicate the all possible permutations for co-ordinate pairs of a given side index.
-	// Split into two groups (one for each pair making up the side defintion)
-
-	// For example, consider the side pairs (face = 2, cube = 7)  and then face = 0 and cube = 1
-
-	// 0 1 2
-	// 3 4 5
-	// 6 7 8
-
-	// Note how 7 and 1 touch? They form the pair at those indexes, forming the tuple at the lookup table above.
-	// If this was a "perfect" solve cube, then you would get UF, to picture this, consider the 2D plane mapped above
-	// like so (U = Upper, and F = Forward). Notice how they "connect" at the bottom? We essentially return the faces that
-	// "connect" at this point. For the solved cube, which we know from Michael Reid is:
-	// UF UR UB UL DF DR DB DL FR FL BR BL UFR URB UBL ULF DRF DFL DLB DBR
-	// then the first tuple must be UF since they connect on the face axis (on a side, not a corner)
-	
-	// 0 1 2
-	// 3 4 5
-	// 6 7 8
-	// ---------
-	// 0 1 2
-	// 3 4 5
-	// 6 7 8
-
-	const int SIDE_INDEX_1[12] = { 2,2,2,2,5,5,5,5,0,0,3,3 };
-	const int SIDE_INDEX_2[12] = { 7,5,1,3,3,1,5,7,5,3,3,5 };
-
-	const int SIDE_INDEX_3[12] = { 0,1,3,4,0,1,3,4,1,4,1,4 };
-	const int SIDE_INDEX_4[12] = { 1,1,1,1,7,7,7,7,3,5,5,3 };
-
-
-	// The process is identical for below, we just simply need more lookups. The same concept applies, however. 
-	// Simply grab the tuples (Face2, Cube8) for the first character and then map out all the tuples against their
-	// center cube colours. 
-
-	const int CORNER_INDEX_1[8] = { 2,2,2,2,5,5,5,5 };
-	const int CORNER_INDEX_2[8] = { 8,2,0,6,0,6,8,2 };
-
-	const int CORNER_INDEX_3[8] = { 0,1,3,4,1,0,4,3 };
-	const int CORNER_INDEX_4[8] = { 2,2,2,2,6,6,6,6 };
-	
-	const int CORNER_INDEX_5[8] = { 1,3,4,0,0,4,3,1 };
-	const int CORNER_INDEX_6[8] = { 0,0,0,0,8,8,8,8 };
+	int UFR = 12;
+	int URB = 13;
+	int UBL = 14;
+	int ULF = 15;
+	int DRF = 16;
+	int DFL = 17;
+	int DLB = 18;
+	int DBR = 19;
 
 };
 
