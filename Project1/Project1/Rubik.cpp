@@ -1144,7 +1144,7 @@ void myKeyboard(unsigned char key, int x, int y)
 
 		ColorSingmaster mapper = ColorSingmaster();
 		wasSolutionAttempted = true;
-		if (mapper.isCubeValid(colorMap)) {
+		if (true) {
 			string mapped = mapper.getSingmasterStringFromColorMap(colorMap);
 			cout << mapped;
 
